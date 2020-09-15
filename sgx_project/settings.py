@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'home',
     'dockers',
     'user',
+    'lkl',
 ]
 
 MIDDLEWARE = [

@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('home.urls')),
     path('dockers/', include('dockers.urls')),
     path('user/', include('user.urls')),
+    path('lkl/', include('lkl.urls')),
 ]

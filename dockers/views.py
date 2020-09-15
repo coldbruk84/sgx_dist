@@ -8,8 +8,9 @@ def getlist(request):
 
     print(client.containers())
 
-
     print(client.images())
+
+    print(client.logs)
 
     return render(request, 'docker_list.html')
 
