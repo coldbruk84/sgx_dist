@@ -7,8 +7,8 @@ def getlist(request):
     client = docker.from_env()
 
     print(client.containers())
-    for container in client.containers():
-        print(container.get('Id'))
+
+    print(client.images())
 
     return render(request, 'docker_list.html')
 
