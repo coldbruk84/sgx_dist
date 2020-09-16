@@ -24,22 +24,100 @@
         <div class="col-lg-12">
             <div class="wrapper wrapper-content animated fadeInUp">
 
-                <div class="ibox">
+                <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5> SGX 이미지 생성</h5>
+                        <h5> SGX 이미지 생성</h5>&nbsp;&nbsp;
+                        <small>
+                            저장된 Alpine Docker image를 사용하여 SGX 구동 가능한 img 파일을 생성합니다.
+                        </small>
                     </div>
                     <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-6 b-r">
+                                    <div class="input-group m-b">
+                                        <div class="input-group-btn">
+                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button" aria-expanded="false">Repository <span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">Repository</a></li>
+                                                <li><a href="#">Another action</a></li>
+                                                <li><a href="#">Something else here</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#">Separated link</a></li>
+                                            </ul>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="찾기">
+                                    </div>
+                                    <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>NO</th>
+                                    <th>Repository</th>
+                                    <th>TAG</th>
+                                    <th>SIZE</th>
+                                    <th>CREATED</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Python-flask</td>
+                                    <td>latest</td>
+                                    <td>700M</td>
+                                    <td>1Y ago</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Alpine-redis</td>
+                                    <td>3.10</td>
+                                    <td>100M</td>
+                                    <td>2D ago</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Alpine-tomcat</td>
+                                    <td>8.5</td>
+                                    <td>200M</td>
+                                    <td>1Y ago</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                            <div class="col-md-6">
+                                <form role="form">
+                                    <div class="col-sm-12"><div class="form-group"><label>SGX 카테고리</label> <select class="form-control m-b" name="account">
+                                        <option>option 1</option>
+                                        <option>option 2</option>
+                                        <option>option 3</option>
+                                        <option>option 4</option>
+                                    </select></div></div>
+                                    <div class="col-sm-12"><div class="form-group"><label>SGX Img 파일 이름</label> <input type="password" class="form-control"></div></div>
+                                </form>
+                                <div class="col-sm-6">
+                                    <label>SGX Img 파일 크기</label>
+                                    <form role="form" class="form-inline">
+                                        <div class="form-group">
+                                            <input type="text"  class="form-control" style="width: 200px">
+                                            <select class="form-control" name="image-file-size" style="width: 70px">
+                                                <option>KB</option>
+                                                <option>MB</option>
+                                                <option>GB</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                                <form role="form">
+                                    <div class="col-sm-6"><div class="form-group"><label>Docker Image</label> <input type="email" class="form-control"></div></div>
+                                    <div class="col-sm-12"><div class="form-group"><label>Save Path</label> <input type="password" class="form-control"></div></div>
+                                </form>
+                                <div class="col-sm-12"> <div style="float: right">
+                                    <button type="button" class="btn btn-sm btn-success">생성</button>
+                                    <button type="button" class="btn btn-sm btn-default">취소</button>
+                                </div></div>
+                            </div>
 
 
-
-
-
-
-
-
-
-
-
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
