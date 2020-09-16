@@ -8,3 +8,7 @@ def create(request):
 
 def execution(request):
     return render(request, 'execution.html')
+
+def execution2(request):
+    return render(request, 'execution2.html')
+

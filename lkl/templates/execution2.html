@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block contents %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>SGX</h2>
+            <ol class="breadcrumb">
+                <li class="active">
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <span>SGX</span>
+                </li>
+                <li class="active">
+                    <strong>SGX 이미지 실행</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="wrapper wrapper-content animated fadeInUp">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>이미지 실행</h5>&nbsp;&nbsp;
+                        <small>생성된 Image 파일을 실행</small>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="row m-b-sm m-t-sm">
+                            <div class="col-md-2">
+                                <span class="label label-success" style="zoom:2">실행 대상 :<span>     ???</span></span>
+                            </div>
+                            <div class="col-md-10"></div>
+                        </div>
+
+                        <div class="execution-image-table">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>설정</th>
+                                    <th>기본값 </th>
+                                    <th>설명</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>SGX_HD</td>
+                                    <td><input type="text" class="form-control" style="width: 50%"></td>
+                                    <td>이미지 파일의 경로</td>
+                                </tr>
+                                <tr>
+                                    <td>SGX_TAB</td>
+                                    <td><select class="form-control" name="account" style="width: 50%">
+                                        <option>tab0</option>
+                                        <option>tab1</option>
+                                        <option>tab2</option>
+                                        <option>tab3</option>
+                                    </select></td>
+                                    <td>네트워크 인터페이스로 사용할 탭 네트워크 장치</td>
+                                </tr>
+                                <tr>
+                                    <td>SGX_IP4</td>
+                                    <td><input type="text" class="form-control" style="width: 50%"></td>
+                                    <td>엔클레이브 내부에 할당 할 IPv4 주소</td>
+                                </tr>
+                                <tr>
+                                    <td>SGX_GW4</td>
+                                    <td><input type="text" class="form-control" style="width: 50%"></td>
+                                    <td>엔클레이브 내부에 할당 할 Gateway 주소</td>
+                                </tr>
+                                <tr>
+                                    <td>SGX_MASK4</td>
+                                    <td><input type="text" class="form-control" style="width: 50%"></td>
+                                    <td>엔클레이브 내부에서 사용할 CIDR mask</td>
+                                </tr>
+                                <tr>
+                                    <td>SGX_HOSTNAME</td>
+                                    <td><input type="text" class="form-control" style="width: 50%"></td>
+                                    <td>엔클레이브 내부에서 사용할 호스트 이름</td>
+                                </tr>
+                                <tr>
+                                    <td>SGX_ETHREADS</td>
+                                    <td><input type="text" class="form-control" style="width: 50%"></td>
+                                    <td>엔클레이브 스레드 개수</td>
+                                </tr>
+                                <tr>
+                                    <td>SGX_STACK_SIZE</td>
+                                    <td><input type="text" class="form-control" style="width: 50%"></td>
+                                    <td>엔클레이브 유저 레벨 스레드의 스택 사이즈</td>
+                                </tr>
+                                <tr>
+                                    <td>SGX_CWD</td>
+                                    <td><input type="text" class="form-control" style="width: 50%"></td>
+                                    <td>작업 디렉토리</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row m-b-sm m-t-sm">
+                            <div class="col-md-12">
+                                <div style="float: right">
+                                    <button type="button" class="btn btn-sm btn-success">실행</button>
+                                    <button type="button" class="btn btn-sm btn-default">취소</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
