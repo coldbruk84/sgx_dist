@@ -52,27 +52,27 @@
                                             </div>
                                             <div class="containers col-md-6">
                                                 <i class="fa fa-bars"></i>
-                                                <small>3 Containers</small>
+                                                <small>{{ cliInfo.Containers }} Containers</small>
                                             </div>
                                             <div class="localhost col-md-6">
                                                 <i class="fa fa-cubes"></i>
-                                                <small>12 Images</small>
+                                                <small>{{ cliInfo.Images }} Images</small>
                                             </div>
                                             <div class="power_on col-md-3">
                                                 <i class="fa fa-power-off" style="color:limegreen"></i>
-                                                <small>3</small>
+                                                <small>{{ cliInfo.Containers }}</small>
                                             </div>
                                             <div class="power_off col-md-3">
                                                 <i class="fa fa-power-off" style="color:red"></i>
-                                                <small>0</small>
+                                                <small>{{ cliInfo.ContainersStopped }}</small>
                                             </div>
                                             <div class="light_on col-md-3">
                                                 <i class="fa fa-heartbeat" style="color:limegreen"></i>
-                                                <small>3</small>
+                                                <small>{{ cliInfo.ContainersRunning }}</small>
                                             </div>
                                             <div class="light_off col-md-3">
                                                 <i class="fa fa-heartbeat" style="color:orange"></i>
-                                                <small>0</small>
+                                                <small>{{ cliInfo.ContainersPaused }}</small>
                                             </div>
                                         </div>
                                     </td>

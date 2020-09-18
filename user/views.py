@@ -1,6 +1,7 @@
 from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render, redirect
 from .models import SgxUser
+from .forms import LoginForm
 
 
 # Create your views here.
@@ -37,28 +38,19 @@ def register(request):
 
 
 def login(request):
-    if request.method == 'GET':
-        return render(request, 'login.html')
-    elif request.method == 'POST':
-        username = request.POST.get('username', None)
-        password = request.POST.get('password', None)
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
 
-        res_data = {}
-        if not (username and password):
-            res_data['error'] = '모든 값을 입력해야 합니다.'
-        else:
-            sgxUser = SgxUser.objects.get(username=username)
-            if check_password(password, sgxUser.password):
-                # 세션 저장
-                request.session['user'] = sgxUser.id
-                request.session['name'] = sgxUser.username
-                request.session['email'] = sgxUser.useremail
-                # 로그인처리
-                return redirect('/')
-            else:
-                res_data['error'] = '비밀번호가 다릅니다.'
+        if form.is_valid():
+            request.session['user'] = form.user_id
+            request.session['name'] = form.user_name
+            request.session['email'] = form.user_email
 
-        return render(request, 'login.html', res_data)
+            return redirect('/')
+    else:
+        form = LoginForm()
+
+    return render(request, 'login.html', {'form': form})
 
 
 def logout(request):
@@ -67,4 +59,4 @@ def logout(request):
         del (request.session['name'])
         del (request.session['email'])
 
-    return redirect('/')
+    return redirect('/user/login')

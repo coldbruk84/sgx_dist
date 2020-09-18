@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="5c6799b0-4786-4210-aac0-846bee203a76" name="10.0.0.150" url="http://http://10.0.0.150:8000/">
+        <fileTransfer rootFolder="/home/classact" accessType="SFTP" host="10.0.0.150" port="22" sshConfigId="915e175f-3303-46aa-acfe-6035170659a3" sshConfig="classact@10.0.0.150:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -1,13 +1,29 @@
 {% extends "base.html" %}
+
 {% block contents %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>Home</h2>
+            <ol class="breadcrumb">
+                <li class="active">
+                    <a href="">Home</a>
+                </li>
+                <li class="active">
+                    <span>Docker</span>
+                </li>
+                <li class="active">
+                    <strong>Docker 이미지 생성</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-12">
-            <div class="wrapper wrapper-content animated fadeInUp">
+            <div class="wrapper wrapper-content">
                 <div class="ibox">
-                    <div class="ibox-title">
-                        <h5> Docker 이미지 생성</h5>&nbsp;&nbsp;
-                        <small>SGX 실행을 위한 Docker 이미지를 생성합니다.</small>
-                    </div>
                     <div class="tabs-container" style="margin-top: 10px">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1"> Web 에디터</a></li>
@@ -15,39 +31,86 @@
                         </ul>
                         <div class="tab-content">
                             <div id="tab-1" class="tab-pane active">
+                            <form method="post" action=".">
                                 <div class="panel-body">
+                                    {% csrf_token %}
                                     <div class="col-sm-6 b-r">
-                                        <form role="form">
-                                            <div class="form-group col-sm-12">
-                                                <label class="control-label">Docker Category</label>
-                                                <div>
-                                                    <select class="form-control m-b" name="account">
-                                                        <option>python</option>
-                                                        <option>python</option>
-                                                        <option>python</option>
-                                                        <option>python</option>
-                                                    </select>
+                                        {% for field in form %}
+                                            {% if field.name == 'category' %}
+                                                <div class="form-group col-sm-12">
+                                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                                    <div>
+                                                        <select class="form-control m-b" id="{{ field.id_for_label }}" name="{{ field.name }}">
+                                                            <option>python</option>
+                                                            <option>nodejs</option>
+                                                            <option>java</option>
+                                                            <option>C</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group col-sm-12"><label>Repository 명</label> <input type="text" class="form-control"></div>
-                                            <div class="form-group col-sm-6"><label>Alpine 버전</label> <input type="text" class="form-control"></div>
-                                            <div class="form-group col-sm-6"><label>태그</label> <input type="text" class="form-control"></div>
-                                            <div class="form-group col-sm-12"><label>소스 경로</label> <input type="text" class="form-control"></div>
-                                            <div class="form-group col-sm-12"><label>실행파일 경로</label> <input type="text" class="form-control"></div>
-                                            <div class="col-sm-12">
-                                                <div style="float: right">
-                                                    <button type="button" class="btn btn-sm btn-success">생성</button>
-                                                    <button type="button" class="btn btn-sm btn-default">취소</button>
+                                            {% elif field.name == 'dockerfile'%}
+                                            {% else %}
+                                                <div class="form-group col-sm-12">
+                                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                                    <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+                                                            name="{{ field.name }}" value="{{ field.field.empty_value }}"/>
                                                 </div>
+                                                {% if field.errors %}
+                                                    <span style="color: red">{{ field.errors }}</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        <div class="col-sm-12">
+                                            <div style="float: right">
+                                                <button type="submit" class="btn btn-sm btn-success">생성</button>
+                                                <button type="button" class="btn btn-sm btn-default">취소</button>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <p class="text-center">
-                                            <h4>This is panel.</h4>
-                                        </p>
+                                    <div class="col-lg-6">
+                                        <div class="ibox ">
+                                            {% for field in form %}
+                                                {% ifequal field.name 'dockerfile' %}
+                                                    {% if field.errors %}
+                                                        <span style="color: red">{{ field.errors }}</span>
+                                                    {% endif %}
+                                                <div class="ibox-content">
+                                                    <textarea id="{{ field.id_for_label }}" name="{{ field.name }}">
+FROM alpine
+MAINTAINER admin
+
+# basic flask environment
+RUN apk add --no-cache bash git nginx uwsgi uwsgi-python py-pip \
+	&& pip install --upgrade pip \
+	&& pip install flask
+
+# application folder
+ENV APP_DIR /app
+
+# app dir
+RUN mkdir ${APP_DIR} \
+	&& chown -R nginx:nginx ${APP_DIR} \
+	&& chmod 777 /run/ -R \
+	&& chmod 777 /root/ -R
+VOLUME ${APP_DIR}
+WORKDIR ${APP_DIR}
+
+# expose web server port
+# only http, for ssl use reverse proxy
+EXPOSE 80
+
+# copy config files into filesystem
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY app.ini /app.ini
+COPY entrypoint.sh /entrypoint.sh
+                                                    </textarea>
+                                                </div>
+                                                {% endifequal %}
+                                            {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
+                            </form>
                             </div>
                             <div id="tab-2" class="tab-pane">
                                 <div class="panel-body">
@@ -79,16 +142,14 @@
                                             <button type="button" class="btn btn-sm btn-default">취소</button>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
+
 {% endblock %}

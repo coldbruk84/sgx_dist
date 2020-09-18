@@ -1,0 +1,44 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <img alt="image" class="img-circle" src="/static/sgx/img/profile_small.jpg" />
+                    </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <span class="clear">
+                        <span class="block m-t-xs"><strong class="font-bold">{{ name }}</strong></span>
+                         <span class="block m-t-xs">{{ email }}</span>
+                        <span class="text-muted text-xs block">Administrator <b class="caret"></b></span>
+                    </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="">마이페이지</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/user/logout">로그아웃</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    SGX
+                </div>
+            </li>
+            <li>
+                <a href="/"><i class="fa fa-laptop"></i> <span class="nav-label">Home</span></a>
+            </li>
+            <li>
+                <a href="/dockers/list/"><i class="fa fa-sitemap"></i> <span class="nav-label">Docker</span></a>
+            </li>
+            <li>
+                <a href=""><i class="fa fa-database"></i> <span class="nav-label">SGX</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="/lkl/create">SGX 이미지 생성</a></li>
+                    <li><a href="/lkl/execution">SGX 이미지 실행</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/user/list/"><i class="fa fa-male"></i> <span class="nav-label">사용자 관리</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>

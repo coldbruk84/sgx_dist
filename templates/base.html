@@ -10,85 +10,21 @@
     <link href="/static/sgx/font-awesome/css/font-awesome.css" rel="stylesheet">
 
     <link href="/static/sgx/css/animate.css" rel="stylesheet">
+    <link href="/static/sgx/css/plugins/codemirror/codemirror.css" rel="stylesheet">
+    <link href="/static/sgx/css/plugins/codemirror/ambiance.css" rel="stylesheet">
     <link href="/static/sgx/css/style.css" rel="stylesheet">
 </head>
 
 <body>
 <div id="wrapper">
-    <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav metismenu" id="side-menu">
-                <li class="nav-header">
-                    <div class="dropdown profile-element">
-                        <span>
-                            <img alt="image" class="img-circle" src="/static/sgx/img/profile_small.jpg" />
-                        </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="clear">
-                            <span class="block m-t-xs"><strong class="font-bold">{{ name }}</strong></span>
-                             <span class="block m-t-xs">{{ email }}</span>
-                            <span class="text-muted text-xs block">Administrator <b class="caret"></b></span>
-                        </span>
-                        </a>
-                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a href="">마이페이지</a></li>
-                            <li class="divider"></li>
-                            <li><a href="/user/logout">로그아웃</a></li>
-                        </ul>
-                    </div>
-                    <div class="logo-element">
-                        SGX
-                    </div>
-                </li>
-                <li>
-                    <a href="/"><i class="fa fa-laptop"></i> <span class="nav-label">Home</span></a>
-                </li>
-                <li>
-                    <a href="/dockers/list/"><i class="fa fa-sitemap"></i> <span class="nav-label">Docker</span></a>
-                </li>
-                <li>
-                    <a href=""><i class="fa fa-database"></i> <span class="nav-label">SGX</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="/lkl/create">SGX 이미지 생성</a></li>
-                        <li><a href="/lkl/execution">SGX 이미지 실행</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="/user/list/"><i class="fa fa-male"></i> <span class="nav-label">사용자 관리</span></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
+    {% include 'left.html' %}
     <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-                <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-                    <form role="search" class="navbar-form-custom" method="post" action="#">
-                        <div class="form-group">
-                            <input type="text" placeholder="검색" class="form-control" name="top-search" id="top-search">
-                        </div>
-                    </form>
-                </div>
-                <ul class="nav navbar-top-links navbar-right">
-                    <li><a href="/user/logout"><i class="fa fa-sign-out"></i>로그아웃</a></li>
-                </ul>
-            </nav>
-        </div>
+        {% include 'header.html' %}
 
         {% block contents %}
         {% endblock %}
 
-        <div class="footer">
-            <div class="pull-right">
-                <i class="fa fa-envelope-square"></i>   webmaster@classact.com
-            </div>
-            <div>
-                <strong>Copyright</strong> Classact Company &copy; 2020-2021
-            </div>
-        </div>
-
+        {% include 'footer.html' %}
     </div>
 </div>
 
@@ -102,7 +38,20 @@
 <script src="/static/sgx/js/inspinia.js"></script>
 <script src="/static/sgx/js/plugins/pace/pace.min.js"></script>
 
+<!-- CodeMirror -->
+<script src="/static/sgx/js/plugins/codemirror/codemirror.js"></script>
+<script src="/static/sgx/js/plugins/codemirror/mode/javascript/javascript.js"></script>
 
+<script>
+    $(document).ready(function(){
+        var editor_one = CodeMirror.fromTextArea(document.getElementById("id_dockerfile"), {
+            lineNumbers: true,
+            matchBrackets: true,
+            styleActiveLine: true,
+            theme:"ambiance"
+        });
+    });
+</script>
 </body>
 
 </html>
