@@ -23,9 +23,7 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-sm-9 m-b-xs">
-                            <button class="btn btn-success btn-sm" type="button">
-                                <i class="fa fa-upload"></i>&nbsp;&nbsp;<span class="bold">사용자 등록</span>
-                            </button>
+                            <a data-toggle="modal" class="btn btn-primary btn-sm" href="#modal-form">사용자 등록</a>
                             <button class="btn btn-danger btn-sm" type="button">
                                 <i class="fa fa-trash"></i>&nbsp;&nbsp;<span class="bold">삭제</span>
                             </button>
@@ -87,4 +85,59 @@
             </div>
         </div>
     </div>
+    <div id="modal-form" class="modal fade" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label>아이디</label>
+                                    <input id="userName" name="userName" type="text" class="form-control" aria-required="true" aria-invalid="true">
+                                </div>
+                                <div class="form-group">
+                                    <label>비밀번호</label>
+                                    <input id="password" name="password" type="password" class="form-control" aria-required="true" aria-invalid="false">
+                                </div>
+                                <div class="form-group">
+                                    <label>비밀번호 확인</label>
+                                    <input id="confirm" name="confirm" type="password" class="form-control" aria-required="true" aria-invalid="false">
+                                </div>
+                                <label class="control-label">권한</label>
+                                <select class="form-control m-b" name="account">
+                                        <option>관리자</option>
+                                        <option>option 2</option>
+                                        <option>option 3</option>
+                                        <option>option 4</option>
+                                    </select>
+                                <div class="form-group">
+                                    <label>사용자명</label>
+                                    <input id="userName" name="userName" type="text" class="form-control" aria-required="true" aria-invalid="true" placeholder="(선택)">
+                                </div>
+
+                                <div class="form-group"><label>이메일(필수)</label>
+                                    <div class="input-group"><input type="email" class="form-control" placeholder="Enter email">
+                                        <div class="input-group-btn">
+                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">선택 <span class="caret"></span></button>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li><a href="#">gmail.com</a></li>
+                                                <li><a href="#">naver.com</a></li>
+                                                <li><a href="#">daum.net</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <br><br>
+                                <button class="btn btn-default pull-right m-t-n-xs" type="submit"><strong>취소</strong></button>
+                                <button class="btn btn-primary pull-right m-t-n-xs" type="submit"><strong>등록</strong></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
