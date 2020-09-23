@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+<script src="/static/js/dockers/docker_list.js"></script>
 {% block contents %}
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
@@ -63,7 +63,7 @@
                                         <div class="col-sm-12">
                                             <div style="float: right">
                                                 <button type="submit" class="btn btn-sm btn-success">생성</button>
-                                                <button type="button" class="btn btn-sm btn-default">취소</button>
+                                                <button type="button" class="btn btn-sm btn-default" onclick="location.href='/dockers/list/'">취소</button>
                                             </div>
                                         </div>
                                     </div>
@@ -76,33 +76,20 @@
                                                     {% endif %}
                                                 <div class="ibox-content">
                                                     <textarea id="{{ field.id_for_label }}" name="{{ field.name }}">
-FROM alpine
+FROM python:3.8.5-alpine3.12
 MAINTAINER admin
 
-# basic flask environment
-RUN apk add --no-cache bash git nginx uwsgi uwsgi-python py-pip \
-	&& pip install --upgrade pip \
-	&& pip install flask
 
-# application folder
-ENV APP_DIR /app
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-# app dir
-RUN mkdir ${APP_DIR} \
-	&& chown -R nginx:nginx ${APP_DIR} \
-	&& chmod 777 /run/ -R \
-	&& chmod 777 /root/ -R
-VOLUME ${APP_DIR}
-WORKDIR ${APP_DIR}
+RUN pip install --no-cache-dir flask
+COPY . /usr/src/app
 
-# expose web server port
-# only http, for ssl use reverse proxy
-EXPOSE 80
+# Expose the Flask port
+EXPOSE 5000
 
-# copy config files into filesystem
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY app.ini /app.ini
-COPY entrypoint.sh /entrypoint.sh
+CMD [ "python", "./app.py" ]
                                                     </textarea>
                                                 </div>
                                                 {% endifequal %}

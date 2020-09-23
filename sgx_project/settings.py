@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'sgx_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'main',
+        'USER': 'root',
+        'PASSWORD': 'password',
+        'HOST': '10.0.0.150',
+        'PORT': '3306'
     }
 }
 

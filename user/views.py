@@ -6,7 +6,8 @@ from .forms import LoginForm
 
 # Create your views here.
 def getlist(request):
-    return render(request, 'user_list.html')
+    context = {'jsUrl': 'user/user_list.js'}
+    return render(request, 'user_list.html', context)
 
 
 def register(request):

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="10.0.0.150" filePermissions="420" folderPermissions="493" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="classact@10.0.0.150:22" filePermissions="420" folderPermissions="493" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
       <paths name="10.0.0.150">
         <serverdata>
@@ -9,7 +9,7 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="Copy of project-level server '10.0.0.150'">
+      <paths name="classact@10.0.0.150:22">
         <serverdata>
           <mappings>
             <mapping deploy="/dev/sgx/sgx_project" local="$PROJECT_DIR$" web="/" />

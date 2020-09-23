@@ -42,16 +42,10 @@
 <script src="/static/sgx/js/plugins/codemirror/codemirror.js"></script>
 <script src="/static/sgx/js/plugins/codemirror/mode/javascript/javascript.js"></script>
 
-<script>
-    $(document).ready(function(){
-        var editor_one = CodeMirror.fromTextArea(document.getElementById("id_dockerfile"), {
-            lineNumbers: true,
-            matchBrackets: true,
-            styleActiveLine: true,
-            theme:"ambiance"
-        });
-    });
-</script>
+<!-- page js -->
+<script src="/static/js/base.js"></script>
+<script src="/static/js/{{ jsUrl }}"></script>
+
 </body>
 
 </html>

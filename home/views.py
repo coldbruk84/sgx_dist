@@ -12,7 +12,7 @@ def index(request):
         client = docker.from_env()
         cliInfo = client.info()
 
-        res_data = {'user': user, 'name': name, 'email': email, 'cliInfo': cliInfo}
+        res_data = {'user': user, 'name': name, 'email': email, 'cliInfo': cliInfo, 'jsUrl': 'home/home.js'}
 
         return render(request, 'home.html', res_data)
     else:
