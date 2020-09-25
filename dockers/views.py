@@ -1,7 +1,9 @@
 import errno
 import os
 import shutil
+import json
 
+import click
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from user.models import SgxUser
@@ -16,21 +18,15 @@ import docker
 # Create your views here.
 def getlist(request):
 
-    # client = docker.from_env()
-    # containers = client.containers.list()
-    #
-    # images = client.images.list()
-    #
-    # for image in images:
-    #     for container in containers:
-    #         stateArr = container.attrs.get('State')
-    #         print(image.attrs.get('Id'))
-    #         if container.attrs.get('Image') == image.attrs.get('Id'):
-    #             image.attrs.update(Status=stateArr.get('Status'))
+    user = request.session.get('user')
+    name = request.session.get('name')
+    email = request.session.get('email')
+    sessionDic = {'user': user, 'name': name, 'email': email}
 
     user_id = request.session.get('user')
     dockerList = SgxDocker.objects.filter(registered_user_id=user_id)
-    context = {'dockerList': dockerList, 'jsUrl': 'dockers/docker_list.js'}
+    context = { 'dockerList': dockerList, 'jsUrl': 'dockers/docker_list.js'}
+    context.update(sessionDic)
 
     return render(request, 'docker_list.html', context)
 
@@ -52,26 +48,35 @@ def register(request):
             dockers.version = form.cleaned_data['version']
             dockers.tag = form.cleaned_data['tag']
             dockers.sourcePath = form.cleaned_data['sourcePath']
-            dockers.filePath = form.cleaned_data['filePath']
+            dockers.filePath = form.cleaned_data['directories']
             dockers.dockerfile = form.cleaned_data['dockerfile']
+            dockers.directories = form.cleaned_data['directories']
             dockers.registered_user = sgxUser
+
 
             # make Docker File
             dockerFilePath = makeDockerFile(request, dockers)
 
             if dockerFilePath:
-                print(dockerFilePath)
 
                 # docker build
-                # dockerLog = buildDockerFile(dockerFilePath)
+                dockerLog = buildDockerFile(dockerFilePath,dockers)
 
-                dockers.save()
+                if dockerLog:
+                    dockers.save()
 
                 return redirect('/dockers/list')
     else:
         form = DockersForm()
 
-    return render(request, 'docker_register.html', {'form': form, 'jsUrl': 'dockers/docker_register.js'})
+    user = request.session.get('user')
+    name = request.session.get('name')
+    email = request.session.get('email')
+    sessionDic = {'user': user, 'name': name, 'email': email}
+
+    context = {'form': form, 'jsUrl': 'dockers/docker_register.js'}
+    context.update(sessionDic)
+    return render(request, 'docker_register.html', context)
 
 
 def makeDockerFile(request, dockers):
@@ -98,17 +103,54 @@ def makeDockerFile(request, dockers):
     save_text.write(dockers.dockerfile)
     save_text.close()
 
+    # 소스 파일 업로드
+    fileList = dockers.directories
+    fileDict = json.loads(fileList)
+    fileObj = request.FILES.getlist('filePath[]')
+
+    for fileGet in fileObj:
+        upFilePath = dirs+fileDict[fileGet.name]
+        handle_uploaded_file(upFilePath,fileGet)
+
     return filepath
 
 
-def buildDockerFile(dockerFilePath):
+def handle_uploaded_file(upFilePath,fileGet):
+    realPath = os.getcwd()+'/'+upFilePath
+    spPath = realPath.rsplit('/',1)[0]
+    try:
+        if not (os.path.isdir(spPath)):
+            # Make repository path folder
+            os.makedirs(os.path.join(spPath))
+
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            print("Failed to create directory!")
+            raise
+
+    with open(realPath, 'wb+') as destination:
+        for chunk in fileGet.chunks():
+            destination.write(chunk)
+
+
+def buildDockerFile(dockerFilePath, dockers):
     path = os.path.dirname(dockerFilePath)
-
+    repository = dockers.repository
     client = docker.from_env()
-    dockerLog = client.images.build(path=path, dockerfile='Dockerfile')
+    dockerLog = client.images.build(path=path, dockerfile='Dockerfile', tag=repository, rm=True)
 
-    for logs in dockerLog:
-        print(logs)
+    while True:
+        try:
+            output = dockerLog.__next__
+            output = output.strip('\r\n')
+            json_output = json.loads(output)
+            if 'stream' in json_output:
+                click.echo(json_output['stream'].strip('\n'))
+        except StopIteration:
+            click.echo("Docker image build complete.")
+            break
+        except ValueError:
+            click.echo("Error parsing output from docker image build: %s" % output)
 
     return dockerLog
 
@@ -123,10 +165,31 @@ def delete(request):
 
     for del_id in req_del_id:
         instance = SgxDocker.objects.get(registered_user_id=user_id, id=del_id)
-        instance.delete()
-
         repo_name = instance.repository
         dirs = 'files/' + user_name + '/' + repo_name + '/'
-        shutil.rmtree(dirs)
+
+        try:
+            shutil.rmtree(dirs)
+        except shutil.Error:
+            print('Path Error')
+        finally:
+            deleteDockerImage(instance)
+
+        instance.delete()
 
     return HttpResponse("delete success %s." % instance)
+
+
+def deleteDockerImage(instance):
+    repoName = instance.repository+':'+instance.tag
+
+    client = docker.from_env()
+
+    # 도커 컨테이너 STOP
+    client.containers.prune()
+
+    # 도커 컨테이너 삭제
+    client.containers.prune()
+
+    # 이미지 삭제
+    client.images.remove(image=repoName,force=True)

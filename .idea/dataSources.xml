@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="sgx-150" uuid="31b49c00-9097-4f5f-91d3-a12a122fa49c">
+    <data-source source="LOCAL" name="@10.0.0.150" uuid="2dd08aa6-b3d6-4d06-935d-5cd927b39616">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://10.0.0.150:3306</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="Django default" uuid="537c9f53-33fa-4689-b2d0-30cde558548d">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>$PROJECT_DIR$/sgx_project/settings.py</remarks>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://10.0.0.150:3306/main</jdbc-url>
     </data-source>
   </component>
 </project>

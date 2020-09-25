@@ -1,3 +1,12 @@
+$(document).ready(function(){
+    // LEFT CSS 설정
+    console.log(window.location.href);
+    let nowLocation = window.location.href;
+    if (nowLocation == '') {
+
+    }
+});
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {

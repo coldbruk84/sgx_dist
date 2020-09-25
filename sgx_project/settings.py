@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'sgx_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'main',
-        'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': '10.0.0.150',
+        'NAME': 'sgx_db',
+        'USER': 'classact',
+        'PASSWORD': 'classact!',
+        'HOST': 'localhost',
         'PORT': '3306'
     }
 }
@@ -123,3 +123,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

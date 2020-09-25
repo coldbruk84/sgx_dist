@@ -21,7 +21,7 @@ $("#delete").click(function(){
             $(location).attr("href", "/dockers/list/");
         },
         error: function(error){
-            alert(error)
+            alert('삭제 중 오류가 발생했습니다.')
         },
     });
 })

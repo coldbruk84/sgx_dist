@@ -25,18 +25,23 @@ class DockersForm(forms.Form):
         error_messages={
             'required': '소스 경로를 입력해 주세요.'
         }, max_length=128, label="소스경로" ,empty_value='/')
-    filePath = forms.CharField(
+    filePath = forms.FileField(
         error_messages={
-            'required': '실행파일 경로를 입력해 주세요.'
-        }, max_length=128, label="실행파일경로" ,empty_value='/')
+            'required': '실행파일을 업로드해 주세요.'
+        }, label="실행파일경로", required = False)
     dockerfile = forms.CharField(
         error_messages={
         }, widget=forms.Textarea, label="도커 텍스트")
+    directories = forms.CharField(
+        error_messages={
+            'required': '실행파일을 업로드해 주세요.'
+        })
 
     def clean(self):
         cleaned_data = super().clean()
         category = cleaned_data.get('category')
         repository = cleaned_data.get('repository')
+        directories = cleaned_data.get('directories')
         insertFlag = 0
 
         if category and repository:

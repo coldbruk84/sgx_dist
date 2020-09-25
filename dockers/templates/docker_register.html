@@ -23,15 +23,18 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="wrapper wrapper-content">
-                <div class="ibox">
-                    <div class="tabs-container" style="margin-top: 10px">
+                <div class="ibox-title">
+                    <h5> Docker 이미지 리스트</h5>
+                </div>
+                <div class="ibox-content grey">
+                    <div class="tabs-container">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1"> Web 에디터</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2">업로드 파일</a></li>
                         </ul>
                         <div class="tab-content">
                             <div id="tab-1" class="tab-pane active">
-                            <form method="post" action=".">
+                            <form method="post" encType="multipart/form-data" action="." >
                                 <div class="panel-body">
                                     {% csrf_token %}
                                     <div class="col-sm-6 b-r">
@@ -49,6 +52,8 @@
                                                     </div>
                                                 </div>
                                             {% elif field.name == 'dockerfile'%}
+                                            {% elif field.name == 'filePath'%}
+                                            {% elif field.name == 'directories'%}
                                             {% else %}
                                                 <div class="form-group col-sm-12">
                                                     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
@@ -59,6 +64,22 @@
                                                     <span style="color: red">{{ field.errors }}</span>
                                                 {% endif %}
                                             {% endif %}
+                                            {% ifequal field.name 'filePath'%}
+                                                <div class="form-group col-sm-12">
+                                                    <label for="{{ field.id_for_label }}">실행파일</label>
+                                                    <input type="file" id="filePath" name="filePath[]" class="form-control" webkitdirectory directory multiple/>
+                                                    <input type="text" id="directories" name="directories" class="form-control hidden" />
+                                                    <ul id="listing"></ul>
+                                                    {% if field.errors %}
+                                                        <span style="color: red">{{ field.errors }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            {% endifequal %}
+                                            {% ifequal field.name 'directories'%}
+                                                {% if field.errors %}
+                                                    <span style="color: red">{{ field.errors }}</span>
+                                                {% endif %}
+                                            {% endifequal %}
                                         {% endfor %}
                                         <div class="col-sm-12">
                                             <div style="float: right">
@@ -76,9 +97,8 @@
                                                     {% endif %}
                                                 <div class="ibox-content">
                                                     <textarea id="{{ field.id_for_label }}" name="{{ field.name }}">
-FROM python:3.8.5-alpine3.12
+FROM python:3.6-alpine
 MAINTAINER admin
-
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -89,7 +109,7 @@ COPY . /usr/src/app
 # Expose the Flask port
 EXPOSE 5000
 
-CMD [ "python", "./app.py" ]
+CMD [ "python", "./app/app.py" ]
                                                     </textarea>
                                                 </div>
                                                 {% endifequal %}

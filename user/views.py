@@ -6,7 +6,13 @@ from .forms import LoginForm
 
 # Create your views here.
 def getlist(request):
+    user = request.session.get('user')
+    name = request.session.get('name')
+    email = request.session.get('email')
+    sessionDic = {'user': user, 'name': name, 'email': email}
+
     context = {'jsUrl': 'user/user_list.js'}
+    context.update(sessionDic)
     return render(request, 'user_list.html', context)
 
 
