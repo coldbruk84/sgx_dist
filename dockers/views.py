@@ -2,17 +2,14 @@ import errno
 import os
 import shutil
 import json
+import docker
 
-import click
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from user.models import SgxUser
 from .models import SgxDocker
-
-
 from .forms import DockersForm
-from django.core.files import File
-import docker
+
 
 
 # Create your views here.
@@ -63,6 +60,10 @@ def register(request):
                 dockerLog = buildDockerFile(dockerFilePath,dockers)
 
                 if dockerLog:
+                    # docker Log ID 를 입력
+                    dockerIdStr = dockerLog[0].id.split(':')[1]
+                    dockers.dockerId = dockerIdStr
+                    
                     dockers.save()
 
                 return redirect('/dockers/list')
@@ -139,19 +140,12 @@ def buildDockerFile(dockerFilePath, dockers):
     client = docker.from_env()
     dockerLog = client.images.build(path=path, dockerfile='Dockerfile', tag=repository, rm=True)
 
-    while True:
-        try:
-            output = dockerLog.__next__
-            output = output.strip('\r\n')
-            json_output = json.loads(output)
-            if 'stream' in json_output:
-                click.echo(json_output['stream'].strip('\n'))
-        except StopIteration:
-            click.echo("Docker image build complete.")
-            break
-        except ValueError:
-            click.echo("Error parsing output from docker image build: %s" % output)
+    for chunk in dockerLog[1]:
+        if 'stream' in chunk:
+            for line in chunk['stream'].splitlines():
+                print(line)
 
+    client.images.prune(filters=None)
     return dockerLog
 
 
@@ -173,9 +167,11 @@ def delete(request):
         except shutil.Error:
             print('Path Error')
         finally:
+            instance.delete()
             deleteDockerImage(instance)
 
-        instance.delete()
+
+
 
     return HttpResponse("delete success %s." % instance)
 

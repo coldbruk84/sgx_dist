@@ -21,6 +21,7 @@ class Migration(migrations.Migration):
                 ('repository', models.CharField(max_length=128, verbose_name='레포지토리명')),
                 ('version', models.CharField(max_length=128, verbose_name='Alpine버전')),
                 ('tag', models.CharField(max_length=128, verbose_name='태그')),
+                ('sourcePath', models.CharField(max_length=128, verbose_name='소스경로')),
                 ('filePath', models.CharField(max_length=128, verbose_name='실행파일경로')),
                 ('dockerfile', models.TextField(verbose_name='도커파일텍스트')),
                 ('registered_dt', models.DateTimeField(auto_now_add=True, verbose_name='등록시간')),

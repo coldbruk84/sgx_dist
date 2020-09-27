@@ -6,7 +6,7 @@
 
     <title>SGX Build Tool</title>
 
-    <link href="/static/sgx/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/sgx/css/bootstrap.css" rel="stylesheet">
     <link href="/static/sgx/font-awesome/css/font-awesome.css" rel="stylesheet">
 
     <link href="/static/sgx/css/animate.css" rel="stylesheet">
@@ -15,7 +15,7 @@
     <link href="/static/sgx/css/style.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="">
 <div id="wrapper">
     {% include 'left.html' %}
     <div id="page-wrapper" class="gray-bg">
@@ -24,7 +24,7 @@
         {% block contents %}
         {% endblock %}
 
-        {% include 'footer.html' %}
+        {% comment %}{% include 'footer.html' %}{% endcomment %}
     </div>
 </div>
 

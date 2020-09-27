@@ -22,190 +22,190 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <div class="wrapper wrapper-content animated fadeInUp">
-
+            <div class="wrapper wrapper-content">
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5> SGX 이미지 실행</h5>&nbsp;&nbsp;
                         <small>생성된 Image 파일을 실행</small>
                     </div>
-                    <div class="tabs-container" style="margin-top: 10px">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tab-1">Python</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-2">Java</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-3">C</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-4">Redis</a></li>
-                        </ul>
-                        <div class="tab-content">
+                    <div class="ibox-content">
+                        <div class="tabs-container" style="margin-top: 10px">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Python</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2">Java</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-3">C</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-4">Redis</a></li>
+                            </ul>
+                            <div class="tab-content">
 
-                            <div id="tab-1" class="tab-pane active">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-sm-5 m-b-xs">
-                                            <button type="button" class="btn btn-sm btn-success"  onclick="location.href='/lkl/execution2/'">실행</button>
-                                            <button type="button" class="btn btn-sm btn-danger">삭제</button>
-                                        </div>
-                                        <div class="col-sm-4 m-b">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-5 m-b-xs">
+                                                <button type="button" class="btn btn-sm btn-success"  onclick="location.href='/lkl/execution2/'">실행</button>
+                                                <button type="button" class="btn btn-sm btn-danger">삭제</button>
+                                            </div>
+                                            <div class="col-sm-4 m-b">
 
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
+                                            <button type="button" class="btn btn-sm btn-primary"> 검색</button> </span></div>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
-                                        <button type="button" class="btn btn-sm btn-primary"> 검색</button> </span></div>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>상태 </th>
+                                                    <th>Image </th>
+                                                    <th>태그</th>
+                                                    <th>크기</th>
+                                                    <th>생성일자</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>
+                                                    <td><span class="label label-primary">Running</span></td>
+                                                    <td>Alpine-Linux</td>
+                                                    <td>3.10</td>
+                                                    <td>106.4M</td>
+                                                    <td>2020-07-30 13:33:34</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>상태 </th>
-                                                <th>Image </th>
-                                                <th>태그</th>
-                                                <th>크기</th>
-                                                <th>생성일자</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>
-                                                <td><span class="label label-primary">Running</span></td>
-                                                <td>Alpine-Linux</td>
-                                                <td>3.10</td>
-                                                <td>106.4M</td>
-                                                <td>2020-07-30 13:33:34</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                </div>
+
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-5 m-b-xs">
+                                                <button type="button" class="btn btn-sm btn-success">실행</button>
+                                                <button type="button" class="btn btn-sm btn-danger">삭제</button>
+                                            </div>
+                                            <div class="col-sm-4 m-b">
+
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
+                                            <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>상태 </th>
+                                                    <th>Image </th>
+                                                    <th>태그</th>
+                                                    <th>크기</th>
+                                                    <th>생성일자</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>
+                                                    <td><span class="label label-primary">Running</span></td>
+                                                    <td>Alpine-Linux</td>
+                                                    <td>3.10</td>
+                                                    <td>106.4M</td>
+                                                    <td>2020-07-30 13:33:34</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="tab-3" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-5 m-b-xs">
+                                                <button type="button" class="btn btn-sm btn-success">실행</button>
+                                                <button type="button" class="btn btn-sm btn-danger">삭제</button>
+                                            </div>
+                                            <div class="col-sm-4 m-b">
+
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
+                                            <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>상태 </th>
+                                                    <th>Image </th>
+                                                    <th>태그</th>
+                                                    <th>크기</th>
+                                                    <th>생성일자</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>
+                                                    <td><span class="label label-primary">Running</span></td>
+                                                    <td>Alpine-Linux</td>
+                                                    <td>3.10</td>
+                                                    <td>106.4M</td>
+                                                    <td>2020-07-30 13:33:34</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="tab-4" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-5 m-b-xs">
+                                                <button type="button" class="btn btn-sm btn-success">실행</button>
+                                                <button type="button" class="btn btn-sm btn-danger">삭제</button>
+                                            </div>
+                                            <div class="col-sm-4 m-b">
+
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
+                                            <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>상태 </th>
+                                                    <th>Image </th>
+                                                    <th>태그</th>
+                                                    <th>크기</th>
+                                                    <th>생성일자</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>
+                                                    <td><span class="label label-primary">Running</span></td>
+                                                    <td>Alpine-Linux</td>
+                                                    <td>3.10</td>
+                                                    <td>106.4M</td>
+                                                    <td>2020-07-30 13:33:34</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div id="tab-2" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-sm-5 m-b-xs">
-                                            <button type="button" class="btn btn-sm btn-success">실행</button>
-                                            <button type="button" class="btn btn-sm btn-danger">삭제</button>
-                                        </div>
-                                        <div class="col-sm-4 m-b">
-
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
-                                        <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>상태 </th>
-                                                <th>Image </th>
-                                                <th>태그</th>
-                                                <th>크기</th>
-                                                <th>생성일자</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>
-                                                <td><span class="label label-primary">Running</span></td>
-                                                <td>Alpine-Linux</td>
-                                                <td>3.10</td>
-                                                <td>106.4M</td>
-                                                <td>2020-07-30 13:33:34</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="tab-3" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-sm-5 m-b-xs">
-                                            <button type="button" class="btn btn-sm btn-success">실행</button>
-                                            <button type="button" class="btn btn-sm btn-danger">삭제</button>
-                                        </div>
-                                        <div class="col-sm-4 m-b">
-
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
-                                        <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>상태 </th>
-                                                <th>Image </th>
-                                                <th>태그</th>
-                                                <th>크기</th>
-                                                <th>생성일자</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>
-                                                <td><span class="label label-primary">Running</span></td>
-                                                <td>Alpine-Linux</td>
-                                                <td>3.10</td>
-                                                <td>106.4M</td>
-                                                <td>2020-07-30 13:33:34</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="tab-4" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-sm-5 m-b-xs">
-                                            <button type="button" class="btn btn-sm btn-success">실행</button>
-                                            <button type="button" class="btn btn-sm btn-danger">삭제</button>
-                                        </div>
-                                        <div class="col-sm-4 m-b">
-
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
-                                        <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>상태 </th>
-                                                <th>Image </th>
-                                                <th>태그</th>
-                                                <th>크기</th>
-                                                <th>생성일자</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>
-                                                <td><span class="label label-primary">Running</span></td>
-                                                <td>Alpine-Linux</td>
-                                                <td>3.10</td>
-                                                <td>106.4M</td>
-                                                <td>2020-07-30 13:33:34</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>

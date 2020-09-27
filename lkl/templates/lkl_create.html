@@ -22,92 +22,100 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <div class="wrapper wrapper-content animated fadeInUp">
+            <div class="wrapper wrapper-content">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>도커 이미지 리스트   <small>생성된 도커 이미지를 선택해 SGX 이미지 파일을 생성합니다.</small></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="pull-right">
+                                <div class="input-group">
+                                    <input type="text" id="lklKeyword" placeholder="Search" class="input-sm form-control">
+                                    <span class="input-group-btn">
+                                        <button type="button" id="searchBtn" class="btn btn-sm btn-primary"> 검색</button>
+                                    </span>
+                                </div>
+                            </div>
 
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5> SGX 이미지 생성</h5>&nbsp;&nbsp;
-                        <small>
-                            저장된 Alpine Docker image를 사용하여 SGX 구동 가능한 img 파일을 생성합니다.
-                        </small>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="row">
-                            <div class="col-md-6 b-r">
-                                    <div class="input-group m-b">
-                                        <div class="input-group-btn">
-                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button" aria-expanded="false">Repository <span class="caret"></span></button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#">Repository</a></li>
-                                                <li><a href="#">Tag</a></li>
-                                            </ul>
-                                        </div>
-                                        <input type="text" id="lklKeyword" class="form-control" placeholder="찾기">
-                                    </div>
-                                    <table class="table table-hover">
+                            <table id="imageList" class="table table-hover table-striped">
                                 <thead>
-                                <tr>
-                                    <th>NO</th>
-                                    <th>Repository</th>
-                                    <th>TAG</th>
-                                    <th>SIZE</th>
-                                    <th>CREATED</th>
-                                </tr>
-
+                                    <tr>
+                                        <th>NO</th>
+                                        <th>이미지명</th>
+                                        <th>TAG</th>
+                                        <th>크기</th>
+                                        <th>생성일자</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                {% for docker in dockerList %}
-                                <tr>
-                                    <td>{{ docker.id }}</td>
-                                    <td>{{ docker.repository }}</td>
-                                    <td>{{ docker.version }}</td>
-                                    <td>{{ docker.tag}}</td>
-                                    <td>{{ docker.registered_dt }}</td>
-                                </tr>
-                                {% endfor %}
+                                    {% for docker in dockerList %}
+                                    <tr>
+                                        <td>{{ docker.id }}</td>
+                                        <td>{{ docker.repository }}</td>
+                                        <td>{{ docker.tag }}</td>
+                                        <td>{{ docker.size}}</td>
+                                        <td>{{ docker.registered_dt }}</td>
+                                        <td hidden >{{ docker.category }}</td>
+                                        <td hidden >{{ docker.dockerId }}</td>
+                                        <td hidden >{{ docker.sourcePath }}</td>
+                                    </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
-                            </div>
-                            <div class="col-md-6">
-                                <form role="form">
-                                    <div class="col-sm-12"><div class="form-group"><label>SGX 카테고리</label> <select class="form-control m-b" name="account">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
-                                    </select></div></div>
-                                    <div class="col-sm-12"><div class="form-group"><label>SGX Img 파일 이름</label> <input type="password" class="form-control"></div></div>
-                                </form>
-                                <div class="col-sm-6">
-                                    <label>SGX Img 파일 크기</label>
-                                    <form role="form" class="form-inline">
-                                        <div class="form-group">
-                                            <input type="text"  class="form-control" style="width: 200px">
-                                            <select class="form-control" name="image-file-size" style="width: 70px">
-                                                <option>KB</option>
-                                                <option>MB</option>
-                                                <option>GB</option>
-                                            </select>
-                                        </div>
-                                    </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>이미지 파일 정보   <small>생성할 이미지 파일의 경로 상세 정보를 입력</small></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <form class="form-horizontal">
+                                <input type="hidden" class="form-control" id="imageId" name="imageId" >
+                                <div class="form-group">
+                                    <label>SGX 카테고리</label>
+                                    <select class="form-control" id="category" name="category">
+                                        <option>python</option>
+                                        <option>nodejs</option>
+                                        <option>java</option>
+                                        <option>C</option>
+                                    </select>
                                 </div>
-                                <form role="form">
-                                    <div class="col-sm-6"><div class="form-group"><label>Docker Image</label> <input type="email" class="form-control"></div></div>
-                                    <div class="col-sm-12"><div class="form-group"><label>Save Path</label> <input type="password" class="form-control"></div></div>
-                                </form>
-                                <div class="col-sm-12"> <div style="float: right">
-                                    <button type="button" class="btn btn-sm btn-success">생성</button>
-                                    <button type="button" class="btn btn-sm btn-default">취소</button>
-                                </div></div>
-                            </div>
-
-
-                            </div>
+                                <div class="form-group">
+                                    <label>SGX 이미지 파일명 <small class=""></small></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="repository" name="repository">
+                                        <span class="input-group-addon">.img</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>SGX 이미지 파일크기</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="size" name="size">
+                                        <span class="input-group-addon">MB</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>도커 이미지</label>
+                                    <input type="text" class="form-control" id="dockerId" name="dockerId" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>이미지 저장 경로</label>
+                                    <input type="text" class="form-control" id="sourcePath" name="sourcePath">
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group pull-right">
+                                        <button type="submit" class="btn btn-sm btn-success">이미지 생성</button>
+                                        <button type="button" class="btn btn-sm btn-default">취소</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 {% endblock %}

@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-striped" id="dockerTable">
+                        <table class="table table-hover table-striped" id="dockerTable">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -52,7 +52,7 @@
                                     <th>버전 </th>
                                     <th>태그 </th>
                                     <th>소스 경로</th>
-                                    <th>실행파일 경로</th>
+                                    <th>도커 Image ID</th>
                                     <th>생성일자</th>
                                 </tr>
                             </thead>
@@ -65,7 +65,7 @@
                                     <td>{{ docker.version }}</td>
                                     <td>{{ docker.tag}}</td>
                                     <td>{{ docker.sourcePath }}</td>
-                                    <td>{{ docker.filePath }}</td>
+                                    <td>{{ docker.dockerId }}</td>
                                     <td>{{ docker.registered_dt }}</td>
                                 </tr>
                                 {% endfor %}
