@@ -4,7 +4,7 @@ from django import forms
 from .models import SgxLkl
 
 
-class DockersForm(forms.Form):
+class LklForm(forms.Form):
     imageName = forms.CharField(
         error_messages={
             'required': '카테고리를 선택해 주세요'

@@ -18,7 +18,7 @@ $(document).ready(function(){
 
         $("#category").val(category)
         $("#repository").val(repository)
-        $("#size").val(size)
+        $("#size").val( Math.round(parseInt(size)/1000000) )
         $("#imageId").val(id)
         $("#dockerId").val(repository+':'+tag)
         $("#sourcePath").val(sourcePath)

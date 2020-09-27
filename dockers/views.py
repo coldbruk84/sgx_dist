@@ -62,7 +62,7 @@ def register(request):
                 if dockerLog:
                     # docker Log ID 를 입력
                     dockerIdStr = dockerLog[0].id.split(':')[1]
-                    dockers.dockerId = dockerIdStr
+                    dockers.imageId = dockerIdStr
                     
                     dockers.save()
 
