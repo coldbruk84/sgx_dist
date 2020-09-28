@@ -48,7 +48,7 @@
                                 <tr>
                                     <th></th>
                                     <th>카테고리 </th>
-                                    <th>Repository </th>
+                                    <th>이미지명 </th>
                                     <th>버전 </th>
                                     <th>태그 </th>
                                     <th>소스 경로</th>
@@ -65,8 +65,8 @@
                                     <td>{{ docker.version }}</td>
                                     <td>{{ docker.tag}}</td>
                                     <td>{{ docker.sourcePath }}</td>
-                                    <td>{{ docker.dockerId }}</td>
-                                    <td>{{ docker.registered_dt }}</td>
+                                    <td>{{ docker.imageId }}</td>
+                                    <td>{{ docker.registered_dt|date:'Y-m-d h:m:s' }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

@@ -24,7 +24,7 @@ class DockersForm(forms.Form):
     sourcePath = forms.CharField(
         error_messages={
             'required': '소스 경로를 입력해 주세요.'
-        }, max_length=128, label="소스경로" ,empty_value='/')
+        }, max_length=128, label="소스경로" ,empty_value='/usr/src/app')
     filePath = forms.FileField(
         error_messages={
             'required': '실행파일을 업로드해 주세요.'

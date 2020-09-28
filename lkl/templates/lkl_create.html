@@ -29,15 +29,16 @@
                             <h5>도커 이미지 리스트   <small>생성된 도커 이미지를 선택해 SGX 이미지 파일을 생성합니다.</small></h5>
                         </div>
                         <div class="ibox-content">
-                            <div class="pull-right">
-                                <div class="input-group">
-                                    <input type="text" id="lklKeyword" placeholder="Search" class="input-sm form-control">
-                                    <span class="input-group-btn">
-                                        <button type="button" id="searchBtn" class="btn btn-sm btn-primary"> 검색</button>
-                                    </span>
+                            <div class="row">
+                                <div class="col-sm-6 pull-right">
+                                    <div class="input-group">
+                                        <input type="text" id="lklKeyword" placeholder="Search" class="input-sm form-control">
+                                        <span class="input-group-btn">
+                                            <button type="button" id="searchBtn" class="btn btn-sm btn-primary"> 검색</button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-
                             <table id="imageList" class="table table-hover table-striped">
                                 <thead>
                                     <tr>
@@ -55,7 +56,7 @@
                                         <td>{{ docker.repository }}</td>
                                         <td>{{ docker.tag }}</td>
                                         <td>{{ docker.size}}</td>
-                                        <td>{{ docker.registered_dt }}</td>
+                                        <td>{{ docker.registered_dt|date:'Y-m-d h:m:s' }}</td>
                                         <td hidden >{{ docker.category }}</td>
                                         <td hidden >{{ docker.dockerId }}</td>
                                         <td hidden >{{ docker.sourcePath }}</td>
@@ -69,7 +70,7 @@
                 <div class="col-lg-6">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>이미지 파일 정보   <small>생성할 이미지 파일의 경로 상세 정보를 입력</small></h5>
+                            <h5>SGX 이미지 파일 정보   <small>생성할 이미지 파일의 경로 상세 정보를 입력</small></h5>
                         </div>
                         <div class="ibox-content">
                             <form class="form-horizontal" method="post" action="/lkl/createLkl/">

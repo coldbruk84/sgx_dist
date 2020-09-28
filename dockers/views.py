@@ -66,7 +66,7 @@ def register(request):
                     
                     dockers.save()
 
-                return redirect('/dockers/list')
+                    return redirect('/dockers/list')
     else:
         form = DockersForm()
 

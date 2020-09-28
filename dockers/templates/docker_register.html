@@ -24,17 +24,17 @@
         <div class="col-lg-12">
             <div class="wrapper wrapper-content">
                 <div class="ibox-title">
-                    <h5> Docker 이미지 리스트</h5>
+                    <h5> Docker 이미지 등록   <small>Dockerfile을 작성하여 SGX 로 빌드할 도커 이미지를 생성합니다.</small></h5>
                 </div>
                 <div class="ibox-content grey">
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1"> Web 에디터</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-2">업로드 파일</a></li>
+{#                            <li class=""><a data-toggle="tab" href="#tab-2">업로드 파일</a></li>#}
                         </ul>
                         <div class="tab-content">
                             <div id="tab-1" class="tab-pane active">
-                            <form method="post" encType="multipart/form-data" action="." >
+                            <form id="registForm" method="post" encType="multipart/form-data" action="." >
                                 <div class="panel-body">
                                     {% csrf_token %}
                                     <div class="col-sm-6 b-r">
@@ -42,20 +42,18 @@
                                             {% if field.name == 'category' %}
                                                 <div class="form-group col-sm-12">
                                                     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                                    <div>
-                                                        <select class="form-control m-b" id="{{ field.id_for_label }}" name="{{ field.name }}">
-                                                            <option>python</option>
-                                                            <option>nodejs</option>
-                                                            <option>java</option>
-                                                            <option>C</option>
-                                                        </select>
-                                                    </div>
+                                                    <select class="form-control m-b" id="{{ field.id_for_label }}" name="{{ field.name }}">
+                                                        <option>python</option>
+                                                        <option>nodejs</option>
+                                                        <option>java</option>
+                                                        <option>C</option>
+                                                    </select>
                                                 </div>
                                             {% elif field.name == 'dockerfile'%}
                                             {% elif field.name == 'filePath'%}
                                             {% elif field.name == 'directories'%}
                                             {% else %}
-                                                <div class="form-group col-sm-12">
+                                                <div class="form-group col-sm-12 {% if field.errors %} has-error {% endif %}">
                                                     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                                                     <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
                                                             name="{{ field.name }}" value="{{ field.field.empty_value }}"/>
@@ -65,7 +63,7 @@
                                                 {% endif %}
                                             {% endif %}
                                             {% ifequal field.name 'filePath'%}
-                                                <div class="form-group col-sm-12">
+                                                <div class="form-group col-sm-12{% if field.errors %} has-error {% endif %}">
                                                     <label for="{{ field.id_for_label }}">실행파일</label>
                                                     <input type="file" id="filePath" name="filePath[]" class="form-control" webkitdirectory directory multiple/>
                                                     <input type="text" id="directories" name="directories" class="form-control hidden" />
@@ -83,7 +81,7 @@
                                         {% endfor %}
                                         <div class="col-sm-12">
                                             <div style="float: right">
-                                                <button type="submit" class="btn btn-sm btn-success">생성</button>
+                                                <button type="button" id="dockerRegist" class="btn btn-sm btn-success">생성</button>
                                                 <button type="button" class="btn btn-sm btn-default" onclick="location.href='/dockers/list/'">취소</button>
                                             </div>
                                         </div>
@@ -97,7 +95,7 @@
                                                     {% endif %}
                                                 <div class="ibox-content">
                                                     <textarea id="{{ field.id_for_label }}" name="{{ field.name }}">
-FROM python:3.6-alpine
+FROM python:3.6-alpine3.12
 MAINTAINER admin
 
 RUN mkdir -p /usr/src/app
@@ -110,6 +108,17 @@ COPY . /usr/src/app
 EXPOSE 5000
 
 CMD [ "python", "./app/app.py" ]
+
+
+
+
+
+
+
+
+
+
+
                                                     </textarea>
                                                 </div>
                                                 {% endifequal %}

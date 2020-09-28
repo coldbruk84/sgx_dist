@@ -1,3 +1,5 @@
+import errno
+
 from django.shortcuts import render, redirect
 from dockers.models import SgxDocker
 from user.models import SgxUser
@@ -5,6 +7,7 @@ from .models import SgxLkl
 
 import docker
 import os
+
 
 # Create your views here.
 def createList(request):
@@ -43,26 +46,52 @@ def createLkl(request):
         lklData.dockerId = sgxDockerData
         lklData.registeredUser = sgxUser
 
-    makeLKLImages(request)
-    lklData.save()
+    imgPath = makeLKLImages(request)
+
+    if imgPath:
+        lklData.imagePath = imgPath
+        lklData.save()
+    else:
+        print('에러가 발생 했습니다')
 
     return redirect('/lkl/create')
 
 
 def makeLKLImages(request):
-
     dockerName = request.POST['repository']
     imageSize = request.POST['size']
     imgName = request.POST['repository']
 
+    user_name = request.session.get('name')
+    sourcePath = request.POST['sourcePath']
+    dirs = 'files/' + user_name + '/' + dockerName + sourcePath
+
     try:
-        os.system("PATH='$PATH:/opt/sgx-lkl/bin'")
-        os.system("sgx-lkl-setup")
-        os.system("sgx-lkl-disk create --docker="+dockerName+" --size="+imageSize+"M "+imgName+".img")
+        if not (os.path.isdir(dirs)):
+            # Make repository path folder
+            os.makedirs(os.path.join(dirs))
+
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            print("Failed to create directory!")
+            raise
+
+
+    try:
+        sudoPassword = 'classact!'
+
+        command1 = "PATH=$PATH:/opt/sgx-lkl/bin"
+        os.system('echo %s|sudo -S %s' % (sudoPassword, command1))
+        command2 = "/opt/sgx-lkl/bin/sgx-lkl-setup"
+        os.system('echo %s|sudo -S %s' % (sudoPassword, command2))
+        command3 = "/opt/sgx-lkl/bin/sgx-lkl-disk create --docker="+dockerName+" --size="+imageSize+"M "+dirs+imgName+".img"
+        os.system('echo %s|sudo -S %s' % (sudoPassword, command3))
+
     except Exception as ex:
         print('에러가 발생 했습니다', ex)
+        return False
 
-    return True
+    return dirs
 
 
 def execution(request):
