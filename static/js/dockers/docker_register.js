@@ -13,9 +13,13 @@ $(document).ready(function(){
     document.querySelector("#filePath").addEventListener("change", function() {
         files = document.querySelector("#filePath").files;
         let directories = {};
-        for (const file of files) {
-            directories[file.name] = file.webkitRelativePath
+        let output = document.getElementById("listing");
+        for (let i=0; i<files.length; i++) {
+            directories[files[i].name] = files[i].webkitRelativePath
 
+            let item = document.createElement("li");
+            item.innerHTML =  files[i].webkitRelativePath;
+            output.appendChild(item);
         }
         directories = JSON.stringify(directories);
         document.querySelector("#directories").value = directories
@@ -27,7 +31,7 @@ $(document).ready(function(){
         editor.setValue(sampleDockerfile)
     });
 
-    $('#id_version').keyup(function (){
+    $('#id_version').change(function (){
         let category = $("#id_category").val()
         let sampleDockerfile = returnSampleDockerfile(category)
         editor.setValue(sampleDockerfile)
@@ -57,6 +61,9 @@ $(document).ready(function(){
                 'EXPOSE 5000\n' +
                 '\n' +
                 'CMD [ "python", "./app/app.py" ]'+
+                '\n' +
+                '\n' +
+                '\n' +
                 '\n' +
                 '\n' +
                 '\n' +
@@ -150,13 +157,7 @@ $(document).ready(function(){
 
     /*Form Validation*/
     $("#dockerRegist").click(function (){
-        let valid_category = $('#id_category').val();
-        let valid_repository = $('#id_repository').val();
-        let valid_version = $('#id_version').val();
-        let valid_tag = $('#id_tag').val();
-        let valid_sourcePath = $('#id_sourcePath').val();
         let valid_filePath = $('#filePath').val();
-        console.log(valid_filePath)
         if(valid_filePath == ''){
             swal({ title: "",text: "실행 파일을 업로드해 주세요",type: "warning"});
         }else{
@@ -178,6 +179,6 @@ $(document).ready(function(){
                 }
             });
         }
-    })
+    });
 
 });

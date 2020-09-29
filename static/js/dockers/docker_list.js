@@ -17,7 +17,7 @@ $("#delete").click(function(){
 
 
     swal({
-        title: "선택한 이미지를 삭제하시겠습니까?",
+        title: "선택한 이미지를 삭제하겠습니까?",
         text: "선택한 도커 이미지 및 생성된 경로의 모든 파일이 삭제됩니다.",
         type: "warning",
         showCancelButton: true,

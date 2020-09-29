@@ -43,34 +43,52 @@
                                                 <div class="form-group col-sm-12">
                                                     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                                                     <select class="form-control m-b" id="{{ field.id_for_label }}" name="{{ field.name }}">
-                                                        <option>python</option>
-                                                        <option>nodejs</option>
-                                                        <option>java</option>
-                                                        <option>C</option>
+                                                        <option value="python">python</option>
+                                                        <option value="nodejs">nodejs</option>
+                                                        <option value="java">java</option>
+                                                        <option value="C">C</option>
                                                     </select>
                                                 </div>
                                             {% elif field.name == 'dockerfile'%}
                                             {% elif field.name == 'filePath'%}
                                             {% elif field.name == 'directories'%}
                                             {% else %}
-                                                <div class="form-group col-sm-12 {% if field.errors %} has-error {% endif %}">
-                                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                                    <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
-                                                            name="{{ field.name }}" value="{{ field.field.empty_value }}"/>
-                                                </div>
-                                                {% if field.errors %}
-                                                    <span style="color: red">{{ field.errors }}</span>
-                                                {% endif %}
-                                            {% endif %}
-                                            {% ifequal field.name 'filePath'%}
-                                                <div class="form-group col-sm-12{% if field.errors %} has-error {% endif %}">
-                                                    <label for="{{ field.id_for_label }}">실행파일</label>
-                                                    <input type="file" id="filePath" name="filePath[]" class="form-control" webkitdirectory directory multiple/>
-                                                    <input type="text" id="directories" name="directories" class="form-control hidden" />
-                                                    <ul id="listing"></ul>
+                                                {% if field.name == 'version' %}
+                                                    <div class="form-group col-sm-12 {% if field.errors %} has-error {% endif %}">
+                                                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                                        <select class="form-control m-b" id="{{ field.id_for_label }}" name="{{ field.name }}">
+                                                            <option value="3.10">3.10</option>
+                                                            <option value="3.9">3.9</option>
+                                                            <option value="3.8">3.8</option>
+                                                            <option value="3.7">3.7</option>
+                                                        </select>
+                                                    </div>
                                                     {% if field.errors %}
                                                         <span style="color: red">{{ field.errors }}</span>
                                                     {% endif %}
+                                                {% else %}
+                                                    <div class="form-group col-sm-12 {% if field.errors %} has-error {% endif %}">
+                                                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                                        <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+                                                                name="{{ field.name }}" value="{{ field.field.empty_value }}" maxlength="30"/>
+                                                    </div>
+                                                    {% if field.errors %}
+                                                        <span style="color: red">{{ field.errors }}</span>
+                                                    {% endif %}
+                                                {% endif %}
+
+                                            {% endif %}
+                                            {% ifequal field.name 'filePath'%}
+                                                <div class="form-group col-sm-12" >
+                                                    <label for="{{ field.id_for_label }}">실행파일</label>
+                                                    <input type="file" id="filePath" name="filePath[]" class="form-control" webkitdirectory directory multiple/>
+                                                    <input type="text" id="directories" name="directories" class="form-control hidden" />
+                                                    {% if field.errors %}
+                                                        <span style="color: red">{{ field.errors }}</span>
+                                                    {% endif %}
+                                                    <div style="height: 130px;overflow-x: hidden">
+                                                        <ul id="listing" ></ul>
+                                                    </div>
                                                 </div>
                                             {% endifequal %}
                                             {% ifequal field.name 'directories'%}
@@ -79,15 +97,9 @@
                                                 {% endif %}
                                             {% endifequal %}
                                         {% endfor %}
-                                        <div class="col-sm-12">
-                                            <div style="float: right">
-                                                <button type="button" id="dockerRegist" class="btn btn-sm btn-success">생성</button>
-                                                <button type="button" class="btn btn-sm btn-default" onclick="location.href='/dockers/list/'">취소</button>
-                                            </div>
-                                        </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="ibox ">
+                                    <div class="col-lg-6 b-r">
+                                        <div class="ibox">
                                             {% for field in form %}
                                                 {% ifequal field.name 'dockerfile' %}
                                                     {% if field.errors %}
@@ -95,7 +107,7 @@
                                                     {% endif %}
                                                 <div class="ibox-content">
                                                     <textarea id="{{ field.id_for_label }}" name="{{ field.name }}">
-FROM python:3.6-alpine3.12
+FROM python:3.6-alpine3.10
 MAINTAINER admin
 
 RUN mkdir -p /usr/src/app
@@ -123,6 +135,12 @@ CMD [ "python", "./app/app.py" ]
                                                 </div>
                                                 {% endifequal %}
                                             {% endfor %}
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div style="float: right">
+                                                <button type="button" id="dockerRegist" class="btn btn-sm btn-success">생성</button>
+                                                <button type="button" class="btn btn-sm btn-default" onclick="location.href='/dockers/list/'">취소</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

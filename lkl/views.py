@@ -1,5 +1,6 @@
 import errno
 
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from dockers.models import SgxDocker
 from user.models import SgxUser
@@ -39,7 +40,7 @@ def createLkl(request):
         sgxDockerData = SgxDocker.objects.get(pk=int(request.POST['imageId']))
 
         lklData = SgxLkl()
-        lklData.imageName = request.POST['repository']
+        lklData.imageName = request.POST['fullImageName']
         lklData.imageSize = request.POST['size']
         lklData.imageRun = 'NO'
         lklData.registered_user = request.session.get('user')
@@ -54,17 +55,36 @@ def createLkl(request):
     else:
         print('에러가 발생 했습니다')
 
-    return redirect('/lkl/create')
+    return HttpResponse("create success %s." % lklData)
+
+
+def validLkl(request):
+    if request.method == 'POST':
+        user_id = request.session.get('user')
+        sgxUser = SgxUser.objects.get(pk=user_id)
+        repository = request.POST['repository']
+        user_name = request.session.get('name')
+        sourcePath = request.POST['sourcePath']
+        dirs = 'files/' + user_name + '/' + repository + sourcePath
+        respMsg = ""
+        try:
+            sgxLklData = SgxLkl.objects.get(imageName=repository, imagePath=dirs)
+            respMsg = "fileFound"
+        except SgxLkl.DoesNotExist :
+            respMsg = "fileNotFound"
+
+        return HttpResponse(respMsg)
+
 
 
 def makeLKLImages(request):
-    dockerName = request.POST['repository']
+    imageName = request.POST['fullImageName']
+    dockerName = request.POST['dockerName']
     imageSize = request.POST['size']
-    imgName = request.POST['repository']
 
     user_name = request.session.get('name')
     sourcePath = request.POST['sourcePath']
-    dirs = 'files/' + user_name + '/' + dockerName + sourcePath
+    dirs = 'files/' + user_name + '/'+ dockerName +  sourcePath
 
     try:
         if not (os.path.isdir(dirs)):
@@ -84,7 +104,8 @@ def makeLKLImages(request):
         os.system('echo %s|sudo -S %s' % (sudoPassword, command1))
         command2 = "/opt/sgx-lkl/bin/sgx-lkl-setup"
         os.system('echo %s|sudo -S %s' % (sudoPassword, command2))
-        command3 = "/opt/sgx-lkl/bin/sgx-lkl-disk create --docker="+dockerName+" --size="+imageSize+"M "+dirs+imgName+".img"
+        command3 = "/opt/sgx-lkl/bin/sgx-lkl-disk create --docker="+dockerName+" --size="+imageSize+"M "+dirs+imageName+".img"
+        print(command3)
         os.system('echo %s|sudo -S %s' % (sudoPassword, command3))
 
     except Exception as ex:

@@ -170,9 +170,6 @@ def delete(request):
             instance.delete()
             deleteDockerImage(instance)
 
-
-
-
     return HttpResponse("delete success %s." % instance)
 
 

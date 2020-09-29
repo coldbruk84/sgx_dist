@@ -73,12 +73,14 @@
                             <h5>SGX 이미지 파일 정보   <small>생성할 이미지 파일의 경로 상세 정보를 입력</small></h5>
                         </div>
                         <div class="ibox-content">
-                            <form class="form-horizontal" method="post" action="/lkl/createLkl/">
+                            <form id="sgxRegisterForm" name="sgxRegisterForm" class="form-horizontal" method="post" action="/lkl/createLkl/">
                                 {% csrf_token %}
                                 <input type="hidden" class="form-control" id="imageId" name="imageId" >
+                                <input type="hidden" class="form-control" id="fullImageName" name="fullImageName" >
+                                <input type="hidden" class="form-control" id="dockerName" name="dockerName" >
                                 <div class="form-group">
                                     <label>SGX 카테고리</label>
-                                    <select class="form-control" id="category" name="category">
+                                    <select class="form-control" id="category" name="category" disabled>
                                         <option>python</option>
                                         <option>nodejs</option>
                                         <option>java</option>
@@ -88,14 +90,15 @@
                                 <div class="form-group">
                                     <label>SGX 이미지 파일명 <small class=""></small></label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="repository" name="repository">
+                                        <span class="input-group-addon" id="addRepoName"></span>
+                                        <input type="text" class="form-control" id="repository" name="repository" maxlength="30">
                                         <span class="input-group-addon">.img</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>SGX 이미지 파일크기</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="size" name="size">
+                                        <input type="number" class="form-control" id="size" name="size">
                                         <span class="input-group-addon">MB</span>
                                     </div>
                                 </div>
@@ -109,7 +112,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group pull-right">
-                                        <button type="submit" class="btn btn-sm btn-success">이미지 생성</button>
+                                        <button type="button" id="sgxRegisterBtn" class="btn btn-sm btn-success">이미지 생성</button>
                                         <button type="button" class="btn btn-sm btn-default">취소</button>
                                     </div>
                                 </div>
