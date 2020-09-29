@@ -5,7 +5,7 @@ from .models import SgxDocker
 
 
 class DockersForm(forms.Form):
-    alpine_version = (('3.7', '3.7'),('3.8', '3.8'),('3.9', '3.9'),('3.10', '3.10'))
+    alpine_version = (('3.7', '3.7'),('3.8', '3.8'),('3.9', '3.9'),('3.10', '3.10'),('8', '8'))
     category = forms.CharField(
         error_messages={
             'required': '카테고리를 선택해 주세요'
@@ -13,7 +13,7 @@ class DockersForm(forms.Form):
     repository = forms.CharField(
         error_messages={
             'required': 'Repository 명을 입력해 주세요.'
-        }, max_length=128, label="레포지토리명" ,empty_value='alpine-flask')
+        }, max_length=128, label="레포지토리명" ,empty_value='alpine-python')
     version = forms.ChoiceField(
         error_messages={
             'required': 'Alpine 버전을 선택해 주세요.'
@@ -29,7 +29,7 @@ class DockersForm(forms.Form):
     filePath = forms.FileField(
         error_messages={
             'required': '실행파일을 업로드해 주세요.'
-        }, label="실행파일경로", required = False)
+        }, max_length=512, label="실행파일경로", required = False)
     dockerfile = forms.CharField(
         error_messages={
         }, widget=forms.Textarea, label="도커 텍스트")

@@ -27,6 +27,19 @@ $(document).ready(function(){
 
     $('#id_category').change(function (){
         let category = $(this).val()
+
+        if(category == 'python'){
+            $("#id_repository").val('alpine-python')
+        }else if(category == 'nodejs'){
+            $("#id_repository").val('alpine-nodejs')
+        }else if(category == 'java'){
+            $("#id_repository").val('alpine-java')
+        }else if(category == 'C'){
+            $("#id_repository").val('alpine-c')
+        }
+
+        selectValueChange(category)
+
         let sampleDockerfile = returnSampleDockerfile(category)
         editor.setValue(sampleDockerfile)
     });
@@ -100,14 +113,9 @@ $(document).ready(function(){
                 '\n' +
                 '\n';
         }else if(category == 'java'){
-            sampleDockerfile = 'FROM openjdk:8-alpine'+alpineVersion+'\n' +
-                '\n' +
-                'COPY ./app /app\n' +
-                '\n' +
-                'WORKDIR /app\n' +
-                '\n' +
-                'RUN javac -source 1.8 -target 1.8 *.java'+
-                '\n' +
+            sampleDockerfile = 'FROM openjdk:'+alpineVersion+'-jdk-alpine\n' +
+                'RUN apk add --no-cache curl tar bash procps\n' +
+                'CMD ["javac"]'+
                 '\n' +
                 '\n' +
                 '\n' +
@@ -129,13 +137,12 @@ $(document).ready(function(){
             sampleDockerfile = 'FROM alpine:'+alpineVersion+' AS builder\n' +
                 'RUN apk add --no-cache gcc musl-dev\n' +
                 '\n' +
-                'ADD *.c /\n' +
+                'ADD app/*.c /\n' +
                 'RUN gcc -g -o helloworld helloworld.c\n' +
                 '\n' +
-                'FROM alpine:3.6\n' +
+                'FROM alpine:'+alpineVersion+'\n' +
                 '\n' +
                 'COPY --from=builder helloworld .\n' +
-                'ADD app /app'+
                 '\n' +
                 '\n' +
                 '\n' +
@@ -153,6 +160,31 @@ $(document).ready(function(){
                 '\n';
         }
         return sampleDockerfile
+    }
+
+    function selectValueChange(category){
+
+        $("#id_version option:eq(0)").remove()
+        $("#id_version option:eq(0)").remove()
+        $("#id_version option:eq(0)").remove()
+        $("#id_version option:eq(0)").remove()
+
+        if( category === 'java' ){
+            $("#version_label").text("openJDK 버전")
+            $("#id_version").append('<option value="8">8</option>')
+        }else if(category === 'nodejs'){
+            $("#version_label").text("Alpine버전")
+            $("#id_version").append("<option value='3.10'>3.10</option>")
+            $("#id_version").append("<option value='3.9'>3.9</option>")
+            $("#id_version").append("<option value='3.8'>3.8</option>")
+        }
+        else {
+            $("#version_label").text("Alpine버전")
+            $("#id_version").append("<option value='3.10'>3.10</option>")
+            $("#id_version").append("<option value='3.9'>3.9</option>")
+            $("#id_version").append("<option value='3.8'>3.8</option>")
+            $("#id_version").append("<option value='3.7'>3.7</option>")
+        }
     }
 
     /*Form Validation*/

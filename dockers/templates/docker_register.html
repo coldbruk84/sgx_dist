@@ -55,7 +55,7 @@
                                             {% else %}
                                                 {% if field.name == 'version' %}
                                                     <div class="form-group col-sm-12 {% if field.errors %} has-error {% endif %}">
-                                                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                                        <label id="version_label" for="{{ field.id_for_label }}">{{ field.label }}</label>
                                                         <select class="form-control m-b" id="{{ field.id_for_label }}" name="{{ field.name }}">
                                                             <option value="3.10">3.10</option>
                                                             <option value="3.9">3.9</option>
