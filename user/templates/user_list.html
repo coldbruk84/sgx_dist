@@ -38,14 +38,23 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th>Project </th>
-                                <th>Completed </th>
-                                <th>Task</th>
-                                <th>Date</th>
-                                <th>Action</th>
+                                <th>사용자명 </th>
+                                <th>권한</th>
+                                <th>이메일</th>
+                                <th>상태</th>
                             </tr>
                             </thead>
                             <tbody>
+                            {% for user in userList %}
+                                <tr>
+                                    <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ user.auth }}</td>
+                                    <td>{{ user.useremail}}</td>
+                                    <td>{{ user.use_state }}</td>
+                                </tr>
+                            {% endfor %}
+                            <!--
                             <tr>
                                 <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
                                 <td>Project<small>This is example of project</small></td>
@@ -78,6 +87,7 @@
                                 <td>Jul 22, 2013</td>
                                 <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
                             </tr>
+                            -->
                             </tbody>
                         </table>
                     </div>
