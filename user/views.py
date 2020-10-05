@@ -11,7 +11,7 @@ def getlist(request):
     email = request.session.get('email')
     sessionDic = {'user': user, 'name': name, 'email': email}
 
-    userList = SgxUser.objects.all()
+    userList = SgxUser.objects.filter()
 
     context = {'userList': userList, 'jsUrl': 'user/user_list.js'}
     context.update(sessionDic)

@@ -70,15 +70,29 @@ $(document).ready(function(){
                         data: queryString,
                         async: true,
                         success: function(response){
+                            console.log(response)
                             swal({
                                     title:"생성되었습니다.",
                                     text:"SGX 이미지 파일이 생성되었습니다. 실행 페이지로 이동할까요?",
                                     type:"success",
                                     closeOnConfirm: true}
-                            ,function (isConfirm){
-                                if(isConfirm){
-                                    $(location).attr("href", "/lkl/execution/");
-                                }
+                                ,function (isConfirm){
+                                    if(isConfirm){
+                                        const form = document.createElement('form');
+                                        let objs;
+                                        objs = document.createElement('input');
+                                        objs.setAttribute('type', 'text');
+                                        objs.setAttribute('name', 'category');
+                                        objs.setAttribute('value', $('#category').val());
+                                        objs.setAttribute('type', 'text');
+                                        objs.setAttribute('name', 'imageName');
+                                        objs.setAttribute('value', $('#fullImageName').val());
+                                        form.appendChild(objs);
+                                        form.setAttribute('method', 'post');
+                                        form.setAttribute('action', "/lkl/execution"); //보내는 url
+                                        document.body.appendChild(form);
+                                        form.submit();
+                                    }
                             });
                         },
                         error: function(error){

@@ -1,11 +1,10 @@
-import errno
-
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from dockers.models import SgxDocker
 from user.models import SgxUser
 from .models import SgxLkl
 
+import errno
 import docker
 import os
 
@@ -116,7 +115,16 @@ def makeLKLImages(request):
 
 
 def execution(request):
-    return render(request, 'execution.html')
+    user = request.session.get('user')
+    name = request.session.get('name')
+    email = request.session.get('email')
+    sessionDic = {'user': user, 'name': name, 'email': email}
+
+    lklList = SgxLkl.objects.select_related('dockerId').filter(registeredUser_id=user)
+    context = {'lklList': lklList, 'jsUrl': 'lkl/execution.js'}
+
+    context.update(sessionDic)
+    return render(request, 'execution.html', context)
 
 
 def execution2(request):
