@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'sgx_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sgx_db',
+        'NAME': 'sgx_test',
         'USER': 'classact',
         'PASSWORD': 'classact!',
         'HOST': 'localhost',

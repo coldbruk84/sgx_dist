@@ -95,10 +95,8 @@ def makeLKLImages(request):
             print("Failed to create directory!")
             raise
 
-
     try:
         sudoPassword = 'classact!'
-
         command1 = "PATH=$PATH:/opt/sgx-lkl/bin"
         os.system('echo %s|sudo -S %s' % (sudoPassword, command1))
         command2 = "/opt/sgx-lkl/bin/sgx-lkl-setup"
@@ -120,13 +118,70 @@ def execution(request):
     email = request.session.get('email')
     sessionDic = {'user': user, 'name': name, 'email': email}
 
+    category = request.POST.get('category', None)
+    imageName = request.POST.get('imageName', None)
+
+    selectImage = {'category':category, 'imageName':imageName}
+    print(selectImage)
+
     lklList = SgxLkl.objects.select_related('dockerId').filter(registeredUser_id=user)
     context = {'lklList': lklList, 'jsUrl': 'lkl/execution.js'}
 
     context.update(sessionDic)
+    context.update(selectImage)
     return render(request, 'execution.html', context)
 
 
-def execution2(request):
-    return render(request, 'execution2.html')
+def deleteImage(request):
+
+    # deleteFile
+    user = request.session.get('user')
+    req_del_id = request.POST.get('chk[]')
+    lklDeleteImage = SgxLkl.objects.filter(registeredUser_id=user, id=req_del_id)
+
+    # deleteDB
+    if deleteFile(lklDeleteImage):
+        lklDeleteImage.delete()
+        return HttpResponse("delete success %s." % lklDeleteImage)
+    else:
+        return HttpResponse("delete Fail %s." % lklDeleteImage)
+
+
+def deleteFile(lklDeleteImage):
+    pathDir = lklDeleteImage[0].imagePath
+    pathFile = lklDeleteImage[0].imageName
+    fullPath = os.path.join(pathDir+pathFile+".img")
+
+    try:
+        if os.path.isfile(fullPath):
+            os.remove(fullPath)
+
+        if os.path.isfile(fullPath + ".docker"):
+            os.remove(fullPath+".docker")
+
+        if os.path.isfile(fullPath + ".docker_entrypoint"):
+            os.remove(fullPath + ".docker_entrypoint")
+    except OSError:
+        print(OSError.strerror)
+        return False
+
+    return True
+
+
+def executionDetail(request):
+    user = request.session.get('user')
+    name = request.session.get('name')
+    email = request.session.get('email')
+    sessionDic = {'user': user, 'name': name, 'email': email}
+
+    category = request.POST.get('category')
+    print(category)
+
+    imageName = request.POST.get('imageName')
+    print(imageName)
+
+    context = {'imageName':imageName, 'jsUrl': 'lkl/executionDetail.js'}
+    context.update(sessionDic)
+
+    return render(request, 'executionDetail.html', context)
 

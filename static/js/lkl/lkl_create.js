@@ -70,7 +70,6 @@ $(document).ready(function(){
                         data: queryString,
                         async: true,
                         success: function(response){
-                            console.log(response)
                             swal({
                                     title:"생성되었습니다.",
                                     text:"SGX 이미지 파일이 생성되었습니다. 실행 페이지로 이동할까요?",
@@ -78,20 +77,7 @@ $(document).ready(function(){
                                     closeOnConfirm: true}
                                 ,function (isConfirm){
                                     if(isConfirm){
-                                        const form = document.createElement('form');
-                                        let objs;
-                                        objs = document.createElement('input');
-                                        objs.setAttribute('type', 'text');
-                                        objs.setAttribute('name', 'category');
-                                        objs.setAttribute('value', $('#category').val());
-                                        objs.setAttribute('type', 'text');
-                                        objs.setAttribute('name', 'imageName');
-                                        objs.setAttribute('value', $('#fullImageName').val());
-                                        form.appendChild(objs);
-                                        form.setAttribute('method', 'post');
-                                        form.setAttribute('action', "/lkl/execution"); //보내는 url
-                                        document.body.appendChild(form);
-                                        form.submit();
+                                        createForm();
                                     }
                             });
                         },
@@ -123,5 +109,35 @@ $(document).ready(function(){
                 return false
             },
         });
+    }
+
+
+    function createForm(){
+        const form = document.createElement('form');
+        let obj1;
+        obj1 = document.createElement('input');
+        obj1.setAttribute('type', 'text');
+        obj1.setAttribute('name', 'category');
+        obj1.setAttribute('value', $('#category').val());
+        form.appendChild(obj1);
+
+        let obj2;
+        obj2 = document.createElement('input');
+        obj2.setAttribute('type', 'text');
+        obj2.setAttribute('name', 'imageName');
+        obj2.setAttribute('value', $('#fullImageName').val());
+        form.appendChild(obj2);
+
+        let obj3;
+        obj3 = document.createElement('input');
+        obj3.setAttribute('type', 'hidden');
+        obj3.setAttribute('name', 'csrfmiddlewaretoken');
+        obj3.setAttribute('value', $("input[name*='csrfmiddlewaretoken']").val());
+        form.appendChild(obj3);
+
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', "/lkl/execution/");
+        document.body.appendChild(form);
+        form.submit();
     }
 });
