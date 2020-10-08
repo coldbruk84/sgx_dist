@@ -6,5 +6,9 @@ urlpatterns = [
     path('createLkl/', views.createLkl),
     path('validLkl/', views.validLkl),
     path('execution/', views.execution),
-    path('executionDetail/', views.executionDetail)
+    path('executionLkl/', views.executionLkl),
+    path('executionDetail/', views.executionDetail),
+    path('createCfg/', views.createCfg)
+
+
 ]

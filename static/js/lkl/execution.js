@@ -2,8 +2,8 @@ $(document).ready(function(){
     $("input[name*='chkBox']").click(function(){
         $("input[name*='chkBox']").prop("checked", false);
         $(this).prop("checked", true);
-        $("table tr").not(this).removeClass('blue-skin text-white');
-        $(this).closest("tr").attr("class","blue-skin text-white");
+        $("table tr").not(this).removeClass('blue-bg text-white');
+        $(this).closest("tr").attr("class","blue-bg text-white");
     });
 
 
@@ -47,10 +47,12 @@ $(document).ready(function(){
     function executionSGXImage(){
         const selectedImage = [];
         let selectImageName = "";
+        let selectImagePath = "";
         $('div.table-responsive input[type=checkbox]').each(function() {
            if ($(this).is(":checked")) {
                const tds = $(this).closest("tr").children();
                selectImageName = tds.eq(2).text();
+               selectImagePath = tds.eq(3).text();
                selectedImage.push($(this).attr('value'));
            }
         });
@@ -82,16 +84,22 @@ $(document).ready(function(){
 
         let obj3;
         obj3 = document.createElement('input');
-        obj3.setAttribute('type', 'hidden');
-        obj3.setAttribute('name', 'csrfmiddlewaretoken');
-        obj3.setAttribute('value', csrftoken);
+        obj3.setAttribute('type', 'text');
+        obj3.setAttribute('name', 'imagePath');
+        obj3.setAttribute('value', selectImagePath);
         exeForm.appendChild(obj3);
+
+        let obj4;
+        obj4 = document.createElement('input');
+        obj4.setAttribute('type', 'hidden');
+        obj4.setAttribute('name', 'csrfmiddlewaretoken');
+        obj4.setAttribute('value', csrftoken);
+        exeForm.appendChild(obj4);
 
         exeForm.setAttribute('method', 'post');
         exeForm.setAttribute('action', "/lkl/executionDetail/");
         document.body.appendChild(exeForm);
         exeForm.submit();
-
     }
 
 

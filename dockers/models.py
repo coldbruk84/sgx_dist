@@ -9,7 +9,7 @@ class SgxDocker(models.Model):
     version = models.CharField(max_length=128, verbose_name='Alpine버전')
     tag = models.CharField(max_length=128, verbose_name='태그')
     sourcePath = models.CharField(max_length=128, verbose_name='소스경로')
-    filePath = models.CharField(max_length=128, verbose_name='실행파일경로')
+    filePath = models.CharField(max_length=1024, verbose_name='실행파일경로')
     dockerfile = models.TextField(verbose_name='도커파일텍스트')
     imageId = models.TextField(max_length=128, verbose_name='도커이미지 ID' ,default='')
     registered_dt = models.DateTimeField(auto_now_add=True, verbose_name='등록시간')

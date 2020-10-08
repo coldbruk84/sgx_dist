@@ -13,7 +13,7 @@ $(document).ready(function(){
         $("#lkl").attr('class','active')
         if(nowLocation[4] == 'create'){
             $("#lkl").children('ul').children('li:eq(0)').children('a').attr('style','color:white')
-        }else if(nowLocation[4] == 'execution'){
+        }else if(nowLocation[4] == 'execution' || nowLocation[4] == 'executionDetail'){
             $("#lkl").children('ul').children('li:eq(1)').children('a').attr('style','color:white')
         }
         $("#lkl").children('ul').attr('class','nav nav-second-level collapse in')

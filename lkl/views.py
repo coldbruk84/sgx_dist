@@ -1,3 +1,5 @@
+import subprocess
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from dockers.models import SgxDocker
@@ -175,13 +177,52 @@ def executionDetail(request):
     sessionDic = {'user': user, 'name': name, 'email': email}
 
     category = request.POST.get('category')
-    print(category)
-
     imageName = request.POST.get('imageName')
-    print(imageName)
+    imagePath = request.POST.get('imagePath')
+    imageDic = {'category': category, 'imageName': imageName, 'imagePath': imagePath}
 
     context = {'imageName':imageName, 'jsUrl': 'lkl/executionDetail.js'}
     context.update(sessionDic)
+    context.update(imageDic)
 
     return render(request, 'executionDetail.html', context)
+
+
+def executionLkl(request):
+    SGX_HD = request.POST.get('SGX_HD')
+    SGX_TAB = request.POST.get('SGX_TAB')
+    SGX_IP4 = request.POST.get('SGX_IP4')
+    SGX_GW4 = request.POST.get('SGX_GW4')
+    SGX_MASK4 = request.POST.get('SGX_MASK4')
+    SGX_ETHREADS = request.POST.get('SGX_ETHREADS')
+    SGX_STACK_SIZE = request.POST.get('SGX_STACK_SIZE')
+    SGX_CWD = request.POST.get('SGX_CWD')
+
+    return HttpResponse("execute success %s." % request)
+
+
+
+def executeEnclaveImage(request):
+
+    # execute Lkl Image
+
+
+    print("executeLkl")
+
+
+def createCfg(request):
+    imageName = request.POST.get('imageName')
+    dirs = request.POST.get('SGX_HD')
+
+    try:
+        cmd = ['/opt/sgx-lkl/bin/sgx-lkl-cfg', 'create', '--disk', dirs+imageName+'.img']
+        fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE).stdout
+        data = fd_popen.read().strip()
+        fd_popen.close()
+        print(data)
+
+    except Exception as ex:
+        print('에러가 발생 했습니다', ex)
+        return False
+    print("createCfg")
 

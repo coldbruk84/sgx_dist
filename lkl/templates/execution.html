@@ -69,7 +69,7 @@
                                                 <tbody>
                                                 {% for lkls in lklList %}
                                                     {% if lkls.dockerId.category == 'python' %}
-                                                        <tr {% if category == lkls.dockerId.category and imageName == lkls.imageName %} class="blue-skin text-white" {% else %}{% endif %}>
+                                                        <tr {% if category == lkls.dockerId.category and imageName == lkls.imageName %} class="blue-bg text-white" {% else %}{% endif %}>
                                                             <td>
                                                                 <input type="checkbox" class="i-checks" name="chkBox" value="{{ lkls.id }}"
                                                                 {% if category == lkls.dockerId.category and imageName == lkls.imageName %}checked{% else %}{% endif %}>
@@ -118,7 +118,7 @@
                                                 <tbody>
                                                 {% for lkls in lklList %}
                                                     {% if lkls.dockerId.category == 'nodejs' %}
-                                                        <tr {% if category == lkls.dockerId.category and imageName == lkls.imageName %} class="blue-skin text-white" {% else %}{% endif %}>
+                                                        <tr {% if category == lkls.dockerId.category and imageName == lkls.imageName %} class="blue-bg text-white" {% else %}{% endif %}>
                                                             <td><input type="checkbox" class="i-checks" name="chkBox" value="{{ lkls.id }}"
                                                             {% if category == lkls.dockerId.category and imageName == lkls.imageName %}checked{% else %}{% endif %}></td>
                                                             <td><span class="label label-primary">{{ lkls.imageRun }}</span></td>
@@ -165,7 +165,7 @@
                                                 <tbody>
                                                 {% for lkls in lklList %}
                                                     {% if lkls.dockerId.category == 'java' %}
-                                                        <tr {% if category == lkls.dockerId.category and imageName == lkls.imageName %} class="blue-skin text-white" {% else %}{% endif %}>
+                                                        <tr {% if category == lkls.dockerId.category and imageName == lkls.imageName %} class="blue-bg text-white" {% else %}{% endif %}>
                                                             <td><input type="checkbox" class="i-checks" name="chkBox" value="{{ lkls.id }}"
                                                             {% if category == lkls.dockerId.category and imageName == lkls.imageName %}checked{% else %}{% endif %}></td>
                                                             <td><span class="label label-primary">{{ lkls.imageRun }}</span></td>
@@ -212,7 +212,7 @@
                                                 <tbody>
                                                 {% for lkls in lklList %}
                                                     {% if lkls.dockerId.category == 'C' %}
-                                                        <tr {% if category == lkls.dockerId.category and imageName == lkls.imageName %} class="blue-skin text-white" {% else %}{% endif %}>
+                                                        <tr {% if category == lkls.dockerId.category and imageName == lkls.imageName %} class="blue-bg text-white" {% else %}{% endif %}>
                                                             <td><input type="checkbox" class="i-checks" name="chkBox" value="{{ lkls.id }}"
                                                             {% if category == lkls.dockerId.category and imageName == lkls.imageName %}checked{% else %}{% endif %}></td>
                                                             <td><span class="label label-primary">{{ lkls.imageRun }}</span></td>

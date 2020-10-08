@@ -39,73 +39,71 @@
                         </div>
 
                         <div class="execution-image-table">
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>설정</th>
-                                    <th>기본값 </th>
-                                    <th>설명</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>SGX_HD</td>
-                                    <td><input type="text" class="form-control" style="width: 50%"></td>
-                                    <td>이미지 파일의 경로</td>
-                                </tr>
-                                <tr>
-                                    <td>SGX_TAB</td>
-                                    <td><select class="form-control" name="account" style="width: 50%">
-                                        <option>tab0</option>
-                                        <option>tab1</option>
-                                        <option>tab2</option>
-                                        <option>tab3</option>
-                                    </select></td>
-                                    <td>네트워크 인터페이스로 사용할 탭 네트워크 장치</td>
-                                </tr>
-                                <tr>
-                                    <td>SGX_IP4</td>
-                                    <td><input type="text" class="form-control" style="width: 50%"></td>
-                                    <td>엔클레이브 내부에 할당 할 IPv4 주소</td>
-                                </tr>
-                                <tr>
-                                    <td>SGX_GW4</td>
-                                    <td><input type="text" class="form-control" style="width: 50%"></td>
-                                    <td>엔클레이브 내부에 할당 할 Gateway 주소</td>
-                                </tr>
-                                <tr>
-                                    <td>SGX_MASK4</td>
-                                    <td><input type="text" class="form-control" style="width: 50%"></td>
-                                    <td>엔클레이브 내부에서 사용할 CIDR mask</td>
-                                </tr>
-                                <tr>
-                                    <td>SGX_HOSTNAME</td>
-                                    <td><input type="text" class="form-control" style="width: 50%"></td>
-                                    <td>엔클레이브 내부에서 사용할 호스트 이름</td>
-                                </tr>
-                                <tr>
-                                    <td>SGX_ETHREADS</td>
-                                    <td><input type="text" class="form-control" style="width: 50%"></td>
-                                    <td>엔클레이브 스레드 개수</td>
-                                </tr>
-                                <tr>
-                                    <td>SGX_STACK_SIZE</td>
-                                    <td><input type="text" class="form-control" style="width: 50%"></td>
-                                    <td>엔클레이브 유저 레벨 스레드의 스택 사이즈</td>
-                                </tr>
-                                <tr>
-                                    <td>SGX_CWD</td>
-                                    <td><input type="text" class="form-control" style="width: 50%"></td>
-                                    <td>작업 디렉토리</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <form id="sgxExecuteForm" name="sgxExecuteForm" class="form-horizontal" method="post" action="/lkl/executeImage/">
+                                <input type="hidden" id="imageName" name="imageName" value="{{ imageName }}">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>설정</th>
+                                        <th>기본값 </th>
+                                        <th>설명</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>SGX_HD</td>
+                                        <td><input type="text" id="SGX_HD" name="SGX_HD" class="form-control" value="{{ imagePath }}" readonly></td>
+                                        <td>이미지 파일의 경로</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SGX_TAB</td>
+                                        <td>
+                                            <select class="form-control" id="SGX_TAB" name="SGX_TAB">
+                                                <option>tab0</option>
+                                            </select>
+                                        </td>
+                                        <td>네트워크 인터페이스로 사용할 탭 네트워크 장치</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SGX_IP4</td>
+                                        <td><input type="text" id="SGX_IP4" name="SGX_IP4" class="form-control" value="10.0.1.1" readonly></td>
+                                        <td>엔클레이브 내부에 할당 할 IPv4 주소</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SGX_GW4</td>
+                                        <td><input type="text" id="SGX_GW4" name="SGX_GW4" class="form-control" value="10.0.1.254" readonly></td>
+                                        <td>엔클레이브 내부에 할당 할 Gateway 주소</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SGX_MASK4</td>
+                                        <td><input type="text" id="SGX_MASK4" name="SGX_MASK4" class="form-control" value="/24" readonly></td>
+                                        <td>엔클레이브 내부에서 사용할 CIDR mask</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>SGX_ETHREADS</td>
+                                        <td><input type="text" id="SGX_ETHREADS" name="SGX_ETHREADS" class="form-control" value="1"></td>
+                                        <td>엔클레이브 스레드 개수</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SGX_STACK_SIZE</td>
+                                        <td><input type="text" id="SGX_STACK_SIZE" name="SGX_STACK_SIZE" class="form-control" value="524288"></td>
+                                        <td>엔클레이브 유저 레벨 스레드의 스택 사이즈</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SGX_CWD</td>
+                                        <td><input type="text" class="form-control" value="/"></td>
+                                        <td>작업 디렉토리</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </form>
                         </div>
                         <div class="row m-b-sm m-t-sm">
                             <div class="col-md-12">
                                 <div style="float: right">
-                                    <button type="button" class="btn btn-sm btn-success">실행</button>
-                                    <button type="button" class="btn btn-sm btn-default">취소</button>
+                                    <button type="button" id="sgxExecuteBtn" class="btn btn-sm btn-success">실행</button>
+                                    <button type="button" id="sgxCancelBtn" class="btn btn-sm btn-default" >취소</button>
                                 </div>
                             </div>
                         </div>
