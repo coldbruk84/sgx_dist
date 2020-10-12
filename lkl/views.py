@@ -99,11 +99,11 @@ def makeLKLImages(request):
 
     try:
         sudoPassword = 'classact!'
-        command1 = "PATH=$PATH:/opt/sgx-lkl/bin"
+        command1 = "PATH=$PATH:/opt/sgx-lkl-debug/bin"
         os.system('echo %s|sudo -S %s' % (sudoPassword, command1))
-        command2 = "/opt/sgx-lkl/bin/sgx-lkl-setup"
+        command2 = "/opt/sgx-lkl-debug/bin/sgx-lkl-setup"
         os.system('echo %s|sudo -S %s' % (sudoPassword, command2))
-        command3 = "/opt/sgx-lkl/bin/sgx-lkl-disk create --docker="+dockerName+" --size="+imageSize+"M "+dirs+imageName+".img"
+        command3 = "/opt/sgx-lkl-debug/bin/sgx-lkl-disk create --docker="+dockerName+" --size="+imageSize+"M "+dirs+imageName+".img"
         print(command3)
         os.system('echo %s|sudo -S %s' % (sudoPassword, command3))
 
@@ -189,6 +189,7 @@ def executionDetail(request):
 
 
 def executionLkl(request):
+    imageName = request.POST.get('imageName')
     SGX_HD = request.POST.get('SGX_HD')
     SGX_TAB = request.POST.get('SGX_TAB')
     SGX_IP4 = request.POST.get('SGX_IP4')
@@ -198,31 +199,43 @@ def executionLkl(request):
     SGX_STACK_SIZE = request.POST.get('SGX_STACK_SIZE')
     SGX_CWD = request.POST.get('SGX_CWD')
 
-    return HttpResponse("execute success %s." % request)
-
-
-
-def executeEnclaveImage(request):
-
-    # execute Lkl Image
-
-
-    print("executeLkl")
-
-
-def createCfg(request):
-    imageName = request.POST.get('imageName')
-    dirs = request.POST.get('SGX_HD')
-
+    os.chdir(os.getcwd())
     try:
-        cmd = ['/opt/sgx-lkl/bin/sgx-lkl-cfg', 'create', '--disk', dirs+imageName+'.img']
-        fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE).stdout
-        data = fd_popen.read().strip()
-        fd_popen.close()
-        print(data)
+        sudoPassword = 'classact!'
+        command1 = "PATH=$PATH:/opt/sgx-lkl-debug/bin"
+        os.system('echo %s|sudo -S %s' % (sudoPassword, command1))
+
+        command2 = "sgx-lkl-setup"
+        os.system('echo %s|sudo -S %s' % (sudoPassword, command2))
+        debugCommad = "SGXLKL_VERBOSE=1 SGXLKL_KERNEL_VERBOSE=1 SGXLKL_TRACE_SIGNAL=0 SGXLKL_TRACE_HOST_SYSCALL=0 SGXLKL_TRACE_LKL_SYSCALL=0 SGXLKL_TRACE_IGNORED_SYSCALL=0 SGXLKL_TRACE_UNSUPPORTED_SYSCALL=0 SGXLKL_TRACE_MMAP=0"
+        command3= debugCommad+" SGXLKL_TAP=sgxlkl_"+SGX_TAB+" /opt/sgx-lkl-debug/bin/sgx-lkl-run-oe --host-config=host-config.json --enclave-config=enclave-config.json --hw-debug"
+        print(command3)
+        os.system('echo %s|sudo -S %s' % (sudoPassword, command3))
 
     except Exception as ex:
         print('에러가 발생 했습니다', ex)
         return False
-    print("createCfg")
 
+    return HttpResponse("execute success %s." % request)
+
+     
+
+def createCfg(request):
+    imageName = request.POST.get('imageName')
+    dirs = request.POST.get('SGX_HD')
+    print(os.getcwd())
+    os.chdir(os.getcwd() + "/" + dirs)
+
+    try:
+        sudoPassword = 'classact!'
+        command1 = "PATH=$PATH:/opt/sgx-lkl-debug/bin"
+        os.system('echo %s|sudo -S %s' % (sudoPassword, command1))
+
+        command2 = "/opt/sgx-lkl-debug/bin/sgx-lkl-cfg create --disk "+imageName+".img"
+        os.system('echo %s|sudo -S %s' % (sudoPassword, command2))
+
+    except Exception as ex:
+        print('에러가 발생 했습니다', ex)
+        return False
+
+    return HttpResponse("createCfg success %s." % os.getcwd())

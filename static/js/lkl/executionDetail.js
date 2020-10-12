@@ -10,10 +10,9 @@ $(document).ready(function(){
             return false
         }
 
-
-
         let SGX_ETHREADS = $('#SGX_ETHREADS').val();
         let SGX_STACK_SIZE = $('#SGX_STACK_SIZE').val();
+
         if(SGX_ETHREADS == ''){
             swal({ title: "",text: "스레드 수를 입력해 주세요.",type: "warning"});
         }else if(SGX_STACK_SIZE == ''){

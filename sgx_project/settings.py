@@ -79,9 +79,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sgx_test',
-        'USER': 'classact',
+        'USER': 'root',
         'PASSWORD': 'classact!',
-        'HOST': 'localhost',
+        'HOST': '10.0.0.150',
         'PORT': '3306'
     }
 }
