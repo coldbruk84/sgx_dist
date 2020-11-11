@@ -2,20 +2,51 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render, redirect
 from .models import SgxUser
 from .forms import LoginForm
+from django.http import HttpResponse
 
 
 # Create your views here.
 def getlist(request):
-    user = request.session.get('user')
-    name = request.session.get('name')
-    email = request.session.get('email')
-    sessionDic = {'user': user, 'name': name, 'email': email}
+    if request.method == "POST":
+        username = request.POST.get('username', None)
+        useremail = request.POST.get('useremail', None)
+        password = request.POST.get('password', None)
 
-    userList = SgxUser.objects.filter()
+        sgxUser = SgxUser(
+            username=username,
+            useremail=useremail,
+            password=make_password(password)
+        )
+        sgxUser.save()
+        return redirect('/')
 
-    context = {'userList': userList, 'jsUrl': 'user/user_list.js'}
-    context.update(sessionDic)
-    return render(request, 'user_list.html', context)
+    elif request.method == "GET":
+        user = request.session.get('user')
+        name = request.session.get('name')
+        email = request.session.get('email')
+        sessionDic = {'user': user, 'name': name, 'email': email}
+
+        userList = SgxUser.objects.filter()
+
+        context = {'userList': userList, 'jsUrl': 'user/user_list.js'}
+        context.update(sessionDic)
+        return render(request, 'user_list.html', context)
+
+def validUser(request):
+    if request.method == 'POST':
+        userName = request.POST['userName']
+        password = request.POST['password']
+        auth = request.POST['auth']
+        email = request.POST['email']
+        respMsg = ""
+
+        try:
+            sqxUserData = SgxUser.objects.get(username=userName)
+            respMsg = "동일한 아이디가 있습니다"
+        except SgxUser.DoesNotExist :
+            respMsg = ""
+
+        return HttpResponse(respMsg)
 
 
 def register(request):
@@ -47,6 +78,7 @@ def register(request):
 
 
 def login(request):
+
     if request.method == 'POST':
         form = LoginForm(request.POST)
 

@@ -102,49 +102,37 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <form role="form">
-                                <div class="form-group">
-                                    <label>아이디</label>
-                                    <input id="userNames" name="userName" type="text" class="form-control" aria-required="true" aria-invalid="true">
+                            <form id="userModalForm" name="userModalForm" role="form">
+                                {% csrf_token %}
+                                <div id="userNameGroup" name="userNameGroup" class="form-group" style="margin-top: 20px">
+                                    <label class="control-label" for="userName">사용자명</label>
+                                    <input id="userName" name="userName" type="text" class="form-control" aria-required="true" aria-invalid="true">
+                                    <span id="userNameSpan" name="userNameSpan" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
                                 </div>
-                                <div class="form-group">
-                                    <label>비밀번호</label>
+                                <div id="passwordGroup" name="passwordGroup" class="form-group">
+                                    <label class="control-label" for="password">비밀번호</label>
                                     <input id="password" name="password" type="password" class="form-control" aria-required="true" aria-invalid="false">
+                                    <span id="passwordSpan" name="passwordSpan" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
                                 </div>
-                                <div class="form-group">
-                                    <label>비밀번호 확인</label>
-                                    <input id="confirm" name="confirm" type="password" class="form-control" aria-required="true" aria-invalid="false">
-                                </div>
-                                <label class="control-label">권한</label>
-                                <select class="form-control m-b" name="account">
+                                <label class="control-label" for="auth">권한</label>
+                                <select id="auth" name="auth" class="form-control m-b" >
                                         <option>관리자</option>
                                         <option>option 2</option>
                                         <option>option 3</option>
                                         <option>option 4</option>
                                     </select>
-                                <div class="form-group">
-                                    <label>사용자명</label>
-                                    <input id="userName" name="userName" type="text" class="form-control" aria-required="true" aria-invalid="true" placeholder="(선택)">
+                                <div id="emailGroup" name="emailGroup" class="form-group">
+                                    <label class="control-label" for="email">이메일</label>
+                                    <input id="email" name="email" type="email" class="form-control">
+                                    <span id="emailSpan" name="emailSpan" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
                                 </div>
-
-                                <div class="form-group"><label>이메일(필수)</label>
-                                    <div class="input-group"><input type="email" class="form-control" placeholder="Enter email">
-                                        <div class="input-group-btn">
-                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">선택 <span class="caret"></span></button>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li><a href="#">gmail.com</a></li>
-                                                <li><a href="#">naver.com</a></li>
-                                                <li><a href="#">daum.net</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                    <br><br>
-                                <button class="btn btn-default pull-right m-t-n-xs" type="submit"><strong>취소</strong></button>
-                                <button class="btn btn-primary pull-right m-t-n-xs" type="submit"><strong>등록</strong></button>
                             </form>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="userSubmit" name="userSubmit" class="btn btn-primary m-t-n-xs" type="submit"><strong>등록</strong></button>
+                    <button id="userClose" name="userClose" class="btn btn-default m-t-n-xs" type="button"><strong>취소</strong></button>
                 </div>
             </div>
         </div>
