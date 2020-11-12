@@ -8,17 +8,23 @@ from django.http import HttpResponse
 # Create your views here.
 def getlist(request):
     if request.method == "POST":
-        username = request.POST.get('username', None)
-        useremail = request.POST.get('useremail', None)
-        password = request.POST.get('password', None)
-
+        username = request.POST['userName']
+        useremail = request.POST['email']
+        password = request.POST['password']
+        resp = ""
         sgxUser = SgxUser(
             username=username,
             useremail=useremail,
             password=make_password(password)
         )
         sgxUser.save()
-        return redirect('/')
+        try:
+            # 위에서 생성한 sgxUser 객체를 획득할 수 있는지 검사
+            SgxUser.objects.get(username=username)
+            resp = "O"
+        except SgxUser.DoesNotExist:
+            resp = "X"
+        return HttpResponse(resp)
 
     elif request.method == "GET":
         user = request.session.get('user')
@@ -32,20 +38,18 @@ def getlist(request):
         context.update(sessionDic)
         return render(request, 'user_list.html', context)
 
+
 def validUser(request):
     if request.method == 'POST':
         userName = request.POST['userName']
-        password = request.POST['password']
-        auth = request.POST['auth']
-        email = request.POST['email']
-        respMsg = ""
-
+        # POST로 전달받은 userName으로 sgxUser 객체 획득
         try:
-            sqxUserData = SgxUser.objects.get(username=userName)
-            respMsg = "동일한 아이디가 있습니다"
-        except SgxUser.DoesNotExist :
-            respMsg = ""
-
+            sgxUserData = SgxUser.objects.get(username=userName)
+            # sgxUser 객체 획득 성공 시 userName 중복
+            respMsg = "O"
+        except SgxUser.DoesNotExist:
+            # sgxUser 객체 획득 실패 시 userName 중복 X
+            respMsg = "X"
         return HttpResponse(respMsg)
 
 
@@ -78,7 +82,6 @@ def register(request):
 
 
 def login(request):
-
     if request.method == 'POST':
         form = LoginForm(request.POST)
 
