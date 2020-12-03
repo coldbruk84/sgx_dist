@@ -11,11 +11,13 @@ def getlist(request):
         username = request.POST['userName']
         useremail = request.POST['email']
         password = request.POST['password']
+        auth = request.POST['auth']
         resp = ""
         sgxUser = SgxUser(
             username=username,
             useremail=useremail,
-            password=make_password(password)
+            password=make_password(password),
+            auth=auth
         )
         sgxUser.save()
         try:
@@ -51,6 +53,35 @@ def validUser(request):
             # sgxUser 객체 획득 실패 시 userName 중복 X
             respMsg = "X"
         return HttpResponse(respMsg)
+
+def deleteUser(request):
+    req_del_name = request.POST.get('chk[]')
+    try:
+        sgxUserData = SgxUser.objects.get(username=req_del_name)
+        sgxUserData.delete()
+        return HttpResponse("delete Success %s." % sgxUserData)
+    except SgxUser.DoesNotExist:
+        return HttpResponse("delete Fail %s." % sgxUserData)
+
+
+def editUser(request):
+    if request.method == 'POST':
+        name = request.POST.get('userName')
+        editemail = request.POST.get('email')
+        editpassword = request.POST.get('password')
+        editauth = request.POST.get('auth')
+        # POST로 전달받은 userName으로 sgxUser 객체 획득
+        try:
+            sgxData = SgxUser.objects.get(username=name)
+            sgxData.useremail = editemail
+            sgxData.password = editpassword
+            sgxData.auth = editauth
+            sgxData.save()
+            return HttpResponse("Edit Success %s." % sgxData)
+        except SgxUser.DoesNotExist:
+            return HttpResponse("Edit Fail %s." % sgxData)
+
+
 
 
 def register(request):

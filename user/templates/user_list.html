@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block contents %}
+
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2>사용자 관리</h2>
@@ -24,70 +25,73 @@
                     <div class="row">
                         <div class="col-sm-9 m-b-xs">
                             <a data-toggle="modal" class="btn btn-primary btn-sm" href="#modal-form">사용자 등록</a>
-                            <button class="btn btn-danger btn-sm" type="button">
+                            <button class="btn btn-danger btn-sm" id="userDelete" type="button">
                                 <i class="fa fa-trash"></i>&nbsp;&nbsp;<span class="bold">삭제</span>
                             </button>
                         </div>
                         <div class="col-sm-3">
-                            <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
+                            <div class="input-group"><input type="text" placeholder="Search"
+                                                            class="input-sm form-control"> <span
+                                    class="input-group-btn">
                                 <button type="button" class="btn btn-sm btn-primary"> 검색</button> </span></div>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
+                    <div class=" project-list">
+                        <table id="user-table" class="table table-striped">
                             <thead>
                             <tr>
                                 <th></th>
-                                <th>사용자명 </th>
+                                <th>사용자명</th>
                                 <th>권한</th>
                                 <th>이메일</th>
                                 <th>상태</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for users in userList %}
                                 <tr>
-                                    <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                    <td><input type="checkbox" class="i-checks" name="input[]"
+                                               value="{{ users.username }}"></td>
                                     <td>{{ users.username }}</td>
                                     <td>{{ users.auth }}</td>
-                                    <td>{{ users.useremail}}</td>
+                                    <td>{{ users.useremail }}</td>
                                     <td>{{ users.use_state }}</td>
+                                    <td class="text-center">
+                                        <div class="ibox-tools ">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                                <i class="fa fa-list"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-user">
+                                                <li style="padding: 5px 10px;">
+                                                    <button type="button" class="btn btn-white btn-sm btn-edit"
+                                                            data-toggle="modal"
+                                                            value={{ users.username }} style="width:100%;border:0;background:#00ff0000;"
+                                                            href="#modal-form">
+                                                        수정
+                                                    </button>
+                                                </li>
+                                                <li class="isDeleteUser" style="padding: 5px 10px;">
+                                                    <button id="liDelete" type="button" class="text-center btn btn-white btn-sm "
+                                                            value={{ users.id }} style="width:100%;border:0;background:#00ff0000;">
+                                                        삭제
+                                                    </button>
+                                                </li>
+                                                <li style="padding: 5px 10px;">
+                                                    <form role="form" method="GET"
+                                                          action="/">
+                                                        <button type="button"
+                                                                class="text-center btn btn-white btn-sm"
+                                                                value={{ users.id }} style="width:100%;border:0;background:#00ff0000;">
+                                                            새로고침
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
                             {% endfor %}
-                            <!--
-                            <tr>
-                                <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
-                                <td>Project<small>This is example of project</small></td>
-                                <td><span class="pie">0.52/1.561</span></td>
-                                <td>20%</td>
-                                <td>Jul 14, 2013</td>
-                                <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="i-checks" name="input[]"></td>
-                                <td>Alpha project</td>
-                                <td><span class="pie">6,9</span></td>
-                                <td>40%</td>
-                                <td>Jul 16, 2013</td>
-                                <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="i-checks" name="input[]"></td>
-                                <td>Betha project</td>
-                                <td><span class="pie">3,1</span></td>
-                                <td>75%</td>
-                                <td>Jul 18, 2013</td>
-                                <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="i-checks" name="input[]"></td>
-                                <td>Gamma project</td>
-                                <td><span class="pie">4,9</span></td>
-                                <td>18%</td>
-                                <td>Jul 22, 2013</td>
-                                <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-                            </tr>
-                            -->
                             </tbody>
                         </table>
                     </div>
@@ -102,40 +106,48 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <form id="userModalForm" name="userModalForm" role="form" action="/user/list/" method="POST">
+                            <form id="userModalForm" name="userModalForm" role="form" action="/user/list/"
+                                  method="POST">
                                 {% csrf_token %}
-                                <div id="userNameGroup" name="userNameGroup" class="form-group" style="margin-top: 20px">
+                                <div id="userNameGroup" name="userNameGroup" class="form-group"
+                                     style="margin-top: 20px">
                                     <label class="control-label" for="userName">사용자명</label>
-                                    <input id="userName" name="userName" type="text" class="form-control" aria-required="true" aria-invalid="true">
+                                    <input id="userName" name="userName" type="text" class="form-control"
+                                           aria-required="true" aria-invalid="true">
                                     <span id="userNameSpan" name="userNameSpan" class="help-block"></span>
                                 </div>
                                 <div id="passwordGroup" name="passwordGroup" class="form-group">
                                     <label class="control-label" for="password">비밀번호</label>
-                                    <input id="password" name="password" type="password" class="form-control" aria-required="true" aria-invalid="false">
+                                    <input id="password" name="password" type="password" class="form-control"
+                                           aria-required="true" aria-invalid="false">
                                     <span id="passwordSpan" name="passwordSpan" class="help-block"></span>
                                 </div>
                                 <label class="control-label" for="auth">권한</label>
-                                <select id="auth" name="auth" class="form-control m-b" >
-                                        <option>관리자</option>
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
-                                    </select>
+                                <select id="auth" name="auth" class="form-control m-b">
+                                    <option>관리자</option>
+                                    <option>option 2</option>
+                                    <option>option 3</option>
+                                    <option>option 4</option>
+                                </select>
                                 <div id="emailGroup" name="emailGroup" class="form-group">
                                     <label class="control-label" for="email">이메일</label>
                                     <input id="email" name="email" type="email" class="form-control">
                                     <span id="emailSpan" name="emailSpan" class="help-block"></span>
                                 </div>
+
                             </form>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button id="userSubmit" class="btn btn-primary m-t-n-xs" type="submit"><strong>등록</strong></button>
-                    <button id="userCancel" class="btn btn-default m-t-n-xs" type="button" data-dismiss="modal"><strong>취소</strong></button>
+                    <button id="userCancel" class="btn btn-default m-t-n-xs" type="button" data-dismiss="modal"><strong>취소</strong>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
+
 
 {% endblock %}
