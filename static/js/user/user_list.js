@@ -203,7 +203,7 @@ function edit_valid() {
                             showCancelButton: true,
                             confirmButtonColor: "#2f5dea",
                             confirmButtonText: "YES",
-                            closeOnConfirm: true,
+                            closeOnConfirm: false, // 이게 true 일 경우 뒤의 swal에 오류 발생!!!
                         }, function (isConfirm) {
                             if (isConfirm) {
                                 //확인 버튼을 누르면 모달 창을 닫고, 페이지 새로고침
