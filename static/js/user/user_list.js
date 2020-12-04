@@ -26,13 +26,33 @@ $(document).ready(function() {
         deleteUser();
     });
 
-    // 수정
+    // 팝업 창의 삭제 버튼
+    $(".btn-li-delete").click(function () {
+        var name = $(this).attr("value");
+        console.log(name);
+        deleteUser_single(name);
+        // var td0 = $(this).closest("tr").find("td").eq(0).children();
+        // var td1 = $(this).closest("tr").find("td").eq(1).html();
+        // console.log(td1);
+        //
+        // td0.attr("checked",true);
+        // console.log(td0.is(":checked"));
+        //
+        // deleteUser2(td1);
+    });
+
+    // 팝업 창의 수정 버튼
     $(".btn-edit").click(function () {
         var name = $(this).attr("value");
         console.log(name);
         usernameField.val(name);
         usernameField.attr("readonly",true);
         $("#userSubmit").text("수정");
+    });
+
+    // 팝업 창의 새로고침 버튼
+    $(".btn-refresh").click(function () {
+        location.reload();
     });
 
     // submit 이벤트 작동 시
@@ -102,7 +122,7 @@ function register_valid() {
             confirmButtonColor: "#2f5dea",
             confirmButtonText: "YES",
             cancelButtonText: "NO",
-            closeOnConfirm: true,
+            closeOnConfirm: false,
             closeOnCancel: false
         }, function (isConfirm) {
             if (isConfirm) {
@@ -184,7 +204,8 @@ function edit_valid() {
             confirmButtonColor: "#2f5dea",
             confirmButtonText: "YES",
             cancelButtonText: "NO",
-            closeOnConfirm: true,
+            closeOnConfirm: false, // Set to false if you want the modal to stay open even if the user presses the "Confirm"-button.
+            // This is especially useful if the function attached to the "Confirm"-button is another SweetAlert.
             closeOnCancel: false
         }, function (isConfirm) {
             if (isConfirm) {
@@ -200,13 +221,11 @@ function edit_valid() {
                             title: "성공",
                             text: "수정이 완료 되었습니다.",
                             type: "success",
-                            showCancelButton: true,
                             confirmButtonColor: "#2f5dea",
                             confirmButtonText: "YES",
-                            closeOnConfirm: false, // 이게 true 일 경우 뒤의 swal에 오류 발생!!!
+                            closeOnConfirm: true,
                         }, function (isConfirm) {
-                            if (isConfirm) {
-                                //확인 버튼을 누르면 모달 창을 닫고, 페이지 새로고침
+                            if(isConfirm) {
                                 $("#modal-form").modal('hide');
                                 location.reload();
                             }
@@ -278,9 +297,63 @@ function initModal() {
     userSubmit.text("등록");
 }
 
+function deleteUser_single(name){
+    const selected = [];
+    selected.push(name);
+
+    swal({
+        title: "선택한 사용자를 삭제하겠습니까?",
+        text: "선택한 사용자가 삭제됩니다.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "YES",
+        cancelButtonText: "NO",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                type: "POST",
+                url: "/user/deleteUser/",
+                data: {'chk': selected},
+                async: true,
+                success: function(response){
+                    swal({
+                            title:"삭제되었습니다.",
+                            text:"선택한 사용자가 삭제되었습니다.",
+                            type:"success",
+                            closeOnConfirm: true }
+                        ,function (isConfirm){
+                            location.reload();
+                            // $('div.table-responsive tr').each(function() {
+                            //     if ($(this).find("td").eq(1).html() === name) {
+                            //         $(this).remove();
+                            //     }
+                            // });
+                        });
+                },
+                error: function(error){
+                    swal("에러", "삭제 중 오류가 발생하였습니다.", "error");
+                },
+            });
+        } else {
+            swal("취소", "취소되었습니다.", "error");
+        }
+    });
+
+}
+
 function deleteUser(){
     const selected = [];
-    $('div.table-responsive input[type=checkbox]').each(function() {
+
+    // $('div.table-responsive input[type=checkbox]').each(function() {
+    //     if ($(this).is(":checked")) {
+    //         selected.push($(this).attr('value'));
+    //     }
+    // });
+
+    $('#user-table input[type=checkbox]').each(function() {
         if ($(this).is(":checked")) {
             selected.push($(this).attr('value'));
         }
@@ -311,19 +384,21 @@ function deleteUser(){
                 type: "POST",
                 url: "/user/deleteUser/",
                 data: {'chk': selected},
-                async: false,
+                async: true,
                 success: function(response){
                     swal({
                             title:"삭제되었습니다.",
                             text:"선택한 사용자가 삭제되었습니다.",
                             type:"success",
-                            closeOnConfirm: true}
+                            closeOnConfirm: true }
                         ,function (isConfirm){
-                            $('div.table-responsive input[type=checkbox]').each(function() {
-                                if ($(this).is(":checked")) {
-                                    $(this).closest("tr").remove();
-                                }
-                            });
+                            location.reload();
+                            // $('div.table-responsive input[type=checkbox]').each(function() {
+                            //     if ($(this).is(":checked")) {
+                            //         $(this).closest("tr").remove();
+                            //         location.reload(true);
+                            //     }
+                            // });
                         });
                 },
                 error: function(error){
