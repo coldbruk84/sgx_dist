@@ -33,14 +33,13 @@ def getlist(request):
         name = request.session.get('name')
         email = request.session.get('email')
         sessionDic = {'user': user, 'name': name, 'email': email}
-
         userList = SgxUser.objects.filter()
-
         context = {'userList': userList, 'jsUrl': 'user/user_list.js'}
         context.update(sessionDic)
         return render(request, 'user_list.html', context)
 
 
+# 새로운 SgxUser 등록 시 username의 중복 검사
 def validUser(request):
     if request.method == 'POST':
         userName = request.POST['userName']
@@ -54,14 +53,17 @@ def validUser(request):
             respMsg = "X"
         return HttpResponse(respMsg)
 
+
 def deleteUser(request):
-    req_del_name = request.POST.get('chk[]')
-    try:
-        sgxUserData = SgxUser.objects.get(username=req_del_name)
-        sgxUserData.delete()
-        return HttpResponse("delete Success %s." % sgxUserData)
-    except SgxUser.DoesNotExist:
-        return HttpResponse("delete Fail %s." % sgxUserData)
+    req_del_name = request.POST.getlist('chk[]')
+    for del_name in req_del_name:
+        try:
+            instance = SgxUser.objects.get(username=del_name)
+            instance.delete()
+        except SgxUser.DoesNotExist:
+            return HttpResponse("delete Fail %s." % instance)
+
+    return HttpResponse("delete Success %s." % req_del_name)
 
 
 def editUser(request):
@@ -80,8 +82,6 @@ def editUser(request):
             return HttpResponse("Edit Success %s." % sgxData)
         except SgxUser.DoesNotExist:
             return HttpResponse("Edit Fail %s." % sgxData)
-
-
 
 
 def register(request):

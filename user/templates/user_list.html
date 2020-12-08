@@ -30,10 +30,12 @@
                             </button>
                         </div>
                         <div class="col-sm-3">
-                            <div class="input-group"><input type="text" placeholder="Search"
-                                                            class="input-sm form-control"> <span
-                                    class="input-group-btn">
-                                <button type="button" class="btn btn-sm btn-primary"> 검색</button> </span></div>
+                            <div class="input-group">
+                                <input id="userKeyword" type="text" placeholder="Search" class="input-sm form-control" maxlength="20">
+                                <span class="input-group-btn">
+                                <button id="searchBtn" type="button" class="btn btn-sm btn-primary">사용자명 검색</button>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div id="div-table" class="project-list">
@@ -113,25 +115,23 @@
                                      style="margin-top: 20px">
                                     <label class="control-label" for="userName">사용자명</label>
                                     <input id="userName" name="userName" type="text" class="form-control"
-                                           aria-required="true" aria-invalid="true">
+                                           aria-required="true" aria-invalid="true" maxlength="20">
                                     <span id="userNameSpan" name="userNameSpan" class="help-block"></span>
                                 </div>
                                 <div id="passwordGroup" name="passwordGroup" class="form-group">
                                     <label class="control-label" for="password">비밀번호</label>
                                     <input id="password" name="password" type="password" class="form-control"
-                                           aria-required="true" aria-invalid="false">
+                                           aria-required="true" aria-invalid="false" maxlength="64">
                                     <span id="passwordSpan" name="passwordSpan" class="help-block"></span>
                                 </div>
                                 <label class="control-label" for="auth">권한</label>
                                 <select id="auth" name="auth" class="form-control m-b">
-                                    <option>관리자</option>
-                                    <option>option 2</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
+                                    <option>admin</option>
+                                    <option>user</option>
                                 </select>
                                 <div id="emailGroup" name="emailGroup" class="form-group">
                                     <label class="control-label" for="email">이메일</label>
-                                    <input id="email" name="email" type="email" class="form-control">
+                                    <input id="email" name="email" type="email" class="form-control" maxlength="64">
                                     <span id="emailSpan" name="emailSpan" class="help-block"></span>
                                 </div>
 
